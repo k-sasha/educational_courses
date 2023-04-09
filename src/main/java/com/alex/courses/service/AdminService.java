@@ -7,6 +7,8 @@ import java.util.List;
 public interface AdminService {
     List<Administrator> getAllAdmins();
     Administrator saveAdmin(Administrator admin);
-    Administrator getAdmin(int id);
-    void deleteAdmin(int id);
+    Administrator getAdmin(long id);
+    void deleteAdmin(long id);
+
+    Administrator changeAdmin(long id, Administrator updatedAdmin);
 }

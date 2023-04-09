@@ -1,0 +1,13 @@
+databaseChangeLog:
+  - changeSet:
+      id: add-column-email-admin
+      author: Aleksandra Anisimova
+      changes:
+        - addColumn:
+            tableName: administrators
+            columns: # объявления колонок
+              - column:
+                  name: email
+                  type: varchar(100)
+                  constraints:
+                    nullable: false

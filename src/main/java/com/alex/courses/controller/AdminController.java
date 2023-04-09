@@ -26,29 +26,25 @@ public class AdminController {
     @PostMapping
     public ResponseEntity<String> addAdmin(@Valid @RequestBody Administrator admin) {
         Administrator newAdmin = adminService.saveAdmin(admin);
-        int id = newAdmin.getId();
+        long id = newAdmin.getId();
         return ResponseEntity.status(HttpStatus.CREATED).body("Admin with id = " + id + " was created");
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Administrator> updateAdmin(@PathVariable int id, @Valid @RequestBody Administrator updatedAdmin) {
-        Administrator existingAdmin = adminService.getAdmin(id);
-
-        existingAdmin.setName(updatedAdmin.getName());
-        existingAdmin.setSurname(updatedAdmin.getSurname());
-
-        Administrator savedAdmin = adminService.saveAdmin(existingAdmin);
+    public ResponseEntity<Administrator> updateAdmin(@PathVariable long id,
+                                                     @Valid @RequestBody Administrator updatedAdmin) {
+        Administrator savedAdmin = adminService.changeAdmin(id, updatedAdmin);
         return ResponseEntity.ok(savedAdmin);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Administrator> getAdmin(@PathVariable int id) {
+    public ResponseEntity<Administrator> getAdmin(@PathVariable long id) {
         Administrator admin = adminService.getAdmin(id);
         return ResponseEntity.ok(admin);
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<String> deleteHuman(@PathVariable int id) {
+    public ResponseEntity<String> deleteHuman(@PathVariable long id) {
         adminService.deleteAdmin(id);
         return ResponseEntity.ok("Admin with id = " + id + " was deleted");
     }
