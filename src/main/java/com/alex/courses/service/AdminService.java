@@ -1,14 +1,14 @@
 package com.alex.courses.service;
 
-import com.alex.courses.entity.Administrator;
+import com.alex.courses.dto.AdminDto;
 
 import java.util.List;
 
 public interface AdminService {
-    List<Administrator> getAllAdmins();
-    Administrator saveAdmin(Administrator admin);
-    Administrator getAdmin(long id);
-    void deleteAdmin(long id);
+    List<AdminDto> getAllAdmins();
+    AdminDto saveAdmin(AdminDto adminDto);
+    AdminDto getAdmin(Long id);
+    void deleteAdmin(Long id);
 
-    Administrator changeAdmin(long id, Administrator updatedAdmin);
+    AdminDto updateAdmin(Long id, AdminDto updatedAdminDto);
 }
