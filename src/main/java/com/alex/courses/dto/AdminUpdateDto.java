@@ -8,26 +8,15 @@ import lombok.Setter;
 import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.Size;
 
 @Setter
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
-public class AdminDto {
+public class AdminUpdateDto {
 
     @Column(name = "id")
     private Long id;
-
-    @Column(name = "name")
-    @NotBlank(message = "name is required")
-    @Size(min = 2, message = "name must be min 2 symbols")
-    private String name;
-
-    @Column(name = "surname")
-    @NotBlank(message = "surname is required")
-    @Size(min = 2, message = "surname must be min 2 symbols")
-    private String surname;
 
     @Column(name = "email")
     @NotBlank(message = "email is required")

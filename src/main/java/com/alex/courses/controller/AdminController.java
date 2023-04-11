@@ -1,6 +1,8 @@
 package com.alex.courses.controller;
 
-import com.alex.courses.dto.AdminDto;
+import com.alex.courses.dto.AdminRequestDto;
+import com.alex.courses.dto.AdminResponseDto;
+import com.alex.courses.dto.AdminUpdateDto;
 import com.alex.courses.service.AdminService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -17,29 +19,29 @@ public class AdminController {
     private AdminService adminService;
 
     @GetMapping
-    public ResponseEntity<List<AdminDto>> showAllAdmins() {
-        List<AdminDto> allAdmins = adminService.getAllAdmins();
+    public ResponseEntity<List<AdminResponseDto>> showAllAdmins() {
+        List<AdminResponseDto> allAdmins = adminService.getAllAdmins();
         return ResponseEntity.ok(allAdmins);
 
     }
 
     @PostMapping
-    public ResponseEntity<String> addAdmin(@Valid @RequestBody AdminDto admin) {
-        AdminDto newAdmin = adminService.saveAdmin(admin);
-        Long id = newAdmin.getId();
-        return ResponseEntity.status(HttpStatus.CREATED).body("Admin with id = " + id + " was created");
+    public ResponseEntity<String> addAdmin(@Valid @RequestBody AdminRequestDto admin) {
+        AdminRequestDto newAdmin = adminService.saveAdmin(admin);
+        String name = newAdmin.getName();
+        return ResponseEntity.status(HttpStatus.CREATED).body("Admin " + name + " was created");
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<AdminDto> updateAdmin(@PathVariable Long id,
-                                                     @Valid @RequestBody AdminDto admin) {
-        AdminDto updatedAdmin = adminService.updateAdmin(id, admin);
+    public ResponseEntity<AdminUpdateDto> updateAdmin(@PathVariable Long id,
+                                                      @Valid @RequestBody AdminUpdateDto admin) {
+        AdminUpdateDto updatedAdmin = adminService.updateAdmin(id, admin);
         return ResponseEntity.ok(updatedAdmin);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<AdminDto> getAdmin(@PathVariable Long id) {
-        AdminDto admin = adminService.getAdmin(id);
+    public ResponseEntity<AdminResponseDto> getAdmin(@PathVariable Long id) {
+        AdminResponseDto admin = adminService.getAdmin(id);
         return ResponseEntity.ok(admin);
     }
 
