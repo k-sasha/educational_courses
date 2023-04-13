@@ -2,12 +2,15 @@ package com.alex.courses.service;
 
 import com.alex.courses.dto.AdminDto;
 import com.alex.courses.entity.Administrator;
+import com.alex.courses.entity.Course;
 import com.alex.courses.exseption_handling.NoSuchHumanException;
 import com.alex.courses.repository.AdminRepository;
+import com.alex.courses.repository.CourseRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -16,6 +19,9 @@ public class AdminServiceImpl implements AdminService {
 
     @Autowired
     private AdminRepository adminRepository;
+
+    @Autowired
+    private CourseRepository courseRepository;
 
     @Autowired
     private ModelMapper modelMapper;
@@ -56,5 +62,15 @@ public class AdminServiceImpl implements AdminService {
         existingAdmin.setEmail(updatedAdminDto.getEmail());
         Administrator savedAdmin = adminRepository.save(existingAdmin);
         return modelMapper.map(savedAdmin, AdminDto.class);
+    }
+
+    @Override
+    public Course addCourseToAdmin(Long id, Course course) {
+        Administrator admin = adminRepository.findById(id).orElseThrow(
+                () -> new NoSuchHumanException("There is no admin with id = " + id));
+        Course newCourse = courseRepository.save(course);
+        admin.getCourses().add(newCourse);
+        newCourse.setAdmin(admin);
+        return newCourse;
     }
 }

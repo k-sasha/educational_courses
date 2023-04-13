@@ -1,11 +1,14 @@
 package com.alex.courses.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Table(name = "administrators")
@@ -25,5 +28,9 @@ public class Administrator {
 
     @Column(name = "email")
     private String email;
+
+    @JsonIgnore
+    @OneToMany(mappedBy = "admin")
+    private Set<Course> courses = new HashSet<>();
 
 }
