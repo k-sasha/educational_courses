@@ -1,7 +1,6 @@
 package com.alex.courses.controller;
 
 import com.alex.courses.dto.AdminDto;
-import com.alex.courses.entity.Administrator;
 import com.alex.courses.entity.Course;
 import com.alex.courses.service.AdminService;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -6,6 +6,8 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
 
 @Entity
 @Table(name = "courses")
@@ -18,6 +20,8 @@ public class Course {
     private Long id;
 
     @Column(name = "name")
+    @NotBlank(message = "name is required")
+    @Size(min = 2, message = "name must be min 2 symbols")
     private String name;
 
     @ManyToOne
