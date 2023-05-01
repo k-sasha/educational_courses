@@ -13,8 +13,8 @@ import java.util.Map;
 public class GlobalExceptionHandler {
 
     @ResponseStatus(HttpStatus.NOT_FOUND)
-    @ExceptionHandler(NoSuchHumanException.class)
-    public Map<String, String> handleNoSuchHumanException(NoSuchHumanException exception) {
+    @ExceptionHandler(ResourceNotFoundException.class)
+    public Map<String, String> handleNoSuchHumanException(ResourceNotFoundException exception) {
         Map<String, String> errorMap = new HashMap<>();
         errorMap.put("errorMessage", exception.getMessage());
         return errorMap;

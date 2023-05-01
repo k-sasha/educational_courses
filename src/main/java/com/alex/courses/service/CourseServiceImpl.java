@@ -1,7 +1,7 @@
 package com.alex.courses.service;
 
 import com.alex.courses.entity.Course;
-import com.alex.courses.exseption_handling.NoSuchHumanException;
+import com.alex.courses.exseption_handling.ResourceNotFoundException;
 import com.alex.courses.repository.CourseRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -28,7 +28,7 @@ public class CourseServiceImpl implements CourseService{
     @Override
     public Course getCourse(Long id) {
         return courseRepository.findById(id).orElseThrow(
-                () -> new NoSuchHumanException("There is no course with id = " + id));
+                () -> new ResourceNotFoundException("There is no course with id = " + id));
     }
 
     @Override

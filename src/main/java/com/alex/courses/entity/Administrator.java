@@ -1,7 +1,5 @@
 package com.alex.courses.entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -12,7 +10,8 @@ import java.util.Set;
 
 @Entity
 @Table(name = "administrators")
-@Getter @Setter @NoArgsConstructor @AllArgsConstructor
+@Getter @Setter
+@NoArgsConstructor
 public class Administrator {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "adminSeq")
@@ -29,8 +28,13 @@ public class Administrator {
     @Column(name = "email")
     private String email;
 
-    @JsonIgnore
     @OneToMany(mappedBy = "admin")
     private Set<Course> courses = new HashSet<>();
 
+    public Administrator(Long id, String name, String surname, String email) {
+        this.id = id;
+        this.name = name;
+        this.surname = surname;
+        this.email = email;
+    }
 }

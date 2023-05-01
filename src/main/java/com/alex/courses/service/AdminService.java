@@ -1,7 +1,7 @@
 package com.alex.courses.service;
 
 
-import com.alex.courses.entity.Course;
+import com.alex.courses.dto.courseDto.CourseResponseDto;
 import com.alex.courses.dto.AdminRequestDto;
 import com.alex.courses.dto.AdminResponseDto;
 import com.alex.courses.dto.AdminUpdateDto;
@@ -15,6 +15,6 @@ public interface AdminService {
     void deleteAdmin(Long id);
 
     AdminUpdateDto updateAdmin(Long id, AdminUpdateDto updatedAdminDto);
-    Course addCourseToAdmin(Long id, Course course);
+    CourseResponseDto addCourseToAdmin(Long admin_id, Long course_id);
 
 }

@@ -1,6 +1,6 @@
 package com.alex.courses.controller;
 
-import com.alex.courses.entity.Course;
+import com.alex.courses.dto.courseDto.CourseResponseDto;
 import com.alex.courses.dto.AdminRequestDto;
 import com.alex.courses.dto.AdminResponseDto;
 import com.alex.courses.dto.AdminUpdateDto;
@@ -52,10 +52,10 @@ public class AdminController {
         return ResponseEntity.ok("Admin with id = " + id + " was deleted");
     }
 
-    @PutMapping("/admin/{admin_id}/addCourse")
-    public ResponseEntity<Course> addCourseToAdmin(@PathVariable Long admin_id,
-                                                     @Valid @RequestBody Course course) {
-        Course newCourse = adminService.addCourseToAdmin(admin_id, course);
+    @PutMapping("/admin/{admin_id}/addCourse/{course_id}")
+    public ResponseEntity<CourseResponseDto> addCourseToAdmin(@PathVariable Long admin_id,
+                                                              @PathVariable Long course_id) {
+        CourseResponseDto newCourse = adminService.addCourseToAdmin(admin_id, course_id);
         return ResponseEntity.ok(newCourse);
     }
 }
