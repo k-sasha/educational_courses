@@ -1,5 +1,7 @@
 package com.alex.courses.controller;
 
+import com.alex.courses.dto.courseDto.CourseRequestDto;
+import com.alex.courses.dto.courseDto.CourseResponseDto;
 import com.alex.courses.entity.Course;
 import com.alex.courses.service.CourseService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,23 +19,23 @@ public class CourseController {
     private CourseService courseService;
 
     @GetMapping
-    public ResponseEntity<List<Course>> showAllCourses() {
-        List<Course> allCourses = courseService.getAllCorses();
+    public ResponseEntity<List<CourseResponseDto>> showAllCourses() {
+        List<CourseResponseDto> allCourses = courseService.getAllCorses();
         return ResponseEntity.ok(allCourses);
     }
 
     @PostMapping
-    public ResponseEntity<String> addCourse(@Valid @RequestBody Course course) {
-        Course newCourse = courseService.saveCourse(course);
+    public ResponseEntity<String> addCourse(@Valid @RequestBody CourseRequestDto courseDto) {
+        CourseResponseDto newCourse = courseService.saveCourse(courseDto);
         Long id = newCourse.getId();
         return ResponseEntity.status(HttpStatus.CREATED).body("Course with id = " + id + " was created");
     }
 
 
     @GetMapping("/{id}")
-    public ResponseEntity<Course> getCourse(@PathVariable Long id) {
-        Course course = courseService.getCourse(id);
-        return ResponseEntity.ok(course);
+    public ResponseEntity<CourseResponseDto> getCourse(@PathVariable Long id) {
+        CourseResponseDto courseDto = courseService.getCourse(id);
+        return ResponseEntity.ok(courseDto);
     }
 
     @DeleteMapping("/{id}")
