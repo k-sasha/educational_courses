@@ -1,9 +1,9 @@
 package com.alex.courses.controller;
 
 import com.alex.courses.dto.courseDto.CourseResponseDto;
-import com.alex.courses.dto.AdminRequestDto;
-import com.alex.courses.dto.AdminResponseDto;
-import com.alex.courses.dto.AdminUpdateDto;
+import com.alex.courses.dto.adminDto.AdminRequestDto;
+import com.alex.courses.dto.adminDto.AdminResponseDto;
+import com.alex.courses.dto.adminDto.AdminUpdateDto;
 import com.alex.courses.service.AdminService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -47,7 +47,7 @@ public class AdminController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<String> deleteHuman(@PathVariable Long id) {
+    public ResponseEntity<String> deleteAdmin(@PathVariable Long id) {
         adminService.deleteAdmin(id);
         return ResponseEntity.ok("Admin with id = " + id + " was deleted");
     }

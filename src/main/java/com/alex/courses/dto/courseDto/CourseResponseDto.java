@@ -1,6 +1,6 @@
 package com.alex.courses.dto.courseDto;
 
-import com.alex.courses.dto.AdminResponseDto;
+import com.alex.courses.dto.adminDto.AdminResponseDto;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

@@ -1,7 +1,9 @@
 package com.alex.courses.service;
 
+import com.alex.courses.dto.adminDto.AdminResponseDto;
 import com.alex.courses.dto.courseDto.CourseRequestDto;
 import com.alex.courses.dto.courseDto.CourseResponseDto;
+import com.alex.courses.entity.Administrator;
 import com.alex.courses.entity.Course;
 import com.alex.courses.exseption_handling.ResourceNotFoundException;
 import com.alex.courses.repository.CourseRepository;
@@ -23,15 +25,14 @@ public class CourseServiceImpl implements CourseService{
 
 
     @Override
-    public List<CourseResponseDto> getAllCorses() {
+    public List<CourseResponseDto> getAllCourses() {
         List<Course> courses = courseRepository.findAll();
-        return courses.stream().map(course -> modelMapper.map(course, CourseResponseDto.class))
+        return courses.stream().map((course) -> modelMapper.map(course, CourseResponseDto.class))
                 .collect(Collectors.toList());
     }
 
     @Override
     public CourseResponseDto saveCourse(CourseRequestDto courseDto) {
-
         Course course = modelMapper.map(courseDto, Course.class);
         Course savedCourse = courseRepository.save(course);
         return modelMapper.map(savedCourse, CourseResponseDto.class);

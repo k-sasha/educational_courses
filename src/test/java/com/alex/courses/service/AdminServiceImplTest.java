@@ -1,8 +1,8 @@
 package com.alex.courses.service;
 
-import com.alex.courses.dto.AdminRequestDto;
-import com.alex.courses.dto.AdminResponseDto;
-import com.alex.courses.dto.AdminUpdateDto;
+import com.alex.courses.dto.adminDto.AdminRequestDto;
+import com.alex.courses.dto.adminDto.AdminResponseDto;
+import com.alex.courses.dto.adminDto.AdminUpdateDto;
 import com.alex.courses.dto.courseDto.CourseResponseDto;
 import com.alex.courses.entity.Administrator;
 import com.alex.courses.entity.Course;

@@ -2,7 +2,6 @@ package com.alex.courses.controller;
 
 import com.alex.courses.dto.courseDto.CourseRequestDto;
 import com.alex.courses.dto.courseDto.CourseResponseDto;
-import com.alex.courses.entity.Course;
 import com.alex.courses.service.CourseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -20,7 +19,7 @@ public class CourseController {
 
     @GetMapping
     public ResponseEntity<List<CourseResponseDto>> showAllCourses() {
-        List<CourseResponseDto> allCourses = courseService.getAllCorses();
+        List<CourseResponseDto> allCourses = courseService.getAllCourses();
         return ResponseEntity.ok(allCourses);
     }
 
