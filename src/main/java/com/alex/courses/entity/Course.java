@@ -20,8 +20,6 @@ public class Course {
     private Long id;
 
     @Column(name = "name")
-    @NotBlank(message = "name is required")
-    @Size(min = 2, message = "name must be min 2 symbols")
     private String name;
 
     @ManyToOne
