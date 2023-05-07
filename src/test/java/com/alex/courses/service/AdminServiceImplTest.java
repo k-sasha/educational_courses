@@ -1,11 +1,14 @@
 package com.alex.courses.service;
 
-import com.alex.courses.dto.AdminRequestDto;
-import com.alex.courses.dto.AdminResponseDto;
-import com.alex.courses.dto.AdminUpdateDto;
+import com.alex.courses.dto.adminDto.AdminRequestDto;
+import com.alex.courses.dto.adminDto.AdminResponseDto;
+import com.alex.courses.dto.adminDto.AdminUpdateDto;
+import com.alex.courses.dto.courseDto.CourseResponseDto;
 import com.alex.courses.entity.Administrator;
-import com.alex.courses.exseption_handling.NoSuchHumanException;
+import com.alex.courses.entity.Course;
+import com.alex.courses.exseption_handling.ResourceNotFoundException;
 import com.alex.courses.repository.AdminRepository;
+import com.alex.courses.repository.CourseRepository;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -28,6 +31,9 @@ public class AdminServiceImplTest {
     @Mock
     private ModelMapper modelMapper;
 
+    @Mock
+    private CourseRepository courseRepository;
+
     @InjectMocks //i.e. upload this mocks (adminRepository and modelMapper)
     // to the service (adminService)
     private AdminServiceImpl adminService;
@@ -36,13 +42,21 @@ public class AdminServiceImplTest {
     @Test
     public void shouldReturnAllAdminsOrAdminById() {
         //given
-        List<Administrator> admins = createAdmins();
+        Administrator admin1 = new Administrator(1L, "Anna"
+                , "Smirnova", "anna@ya.ru");
+        Administrator admin2 = new Administrator(2L, "Ivan"
+                , "Ivanov", "ivan@gmail.com");
+        List<Administrator> admins = List.of(admin1, admin2);
         Mockito.when(adminRepository.findAll()).thenReturn(admins);
 
-        List<AdminResponseDto> expectedAdminResponseDtos = createAdminDtos();
+        Mockito.when(modelMapper.map(admins.get(0), AdminResponseDto.class))
+                .thenReturn(new AdminResponseDto(1L, "Anna", "Smirnova"));
+        Mockito.when(modelMapper.map(admins.get(1), AdminResponseDto.class))
+                .thenReturn(new AdminResponseDto(2L, "Ivan", "Ivanov"));
 
-        Mockito.when(modelMapper.map(admins.get(0), AdminResponseDto.class)).thenReturn(expectedAdminResponseDtos.get(0));
-        Mockito.when(modelMapper.map(admins.get(1), AdminResponseDto.class)).thenReturn(expectedAdminResponseDtos.get(1));
+        AdminResponseDto adminResponseDto1 = modelMapper.map(admins.get(0), AdminResponseDto.class);
+        AdminResponseDto adminResponseDto2 = modelMapper.map(admins.get(1), AdminResponseDto.class);
+        List<AdminResponseDto> expectedAdminResponseDtos = List.of(adminResponseDto1, adminResponseDto2);
 
         //when
         List<AdminResponseDto> resultAdminResponseDtos = adminService.getAllAdmins();
@@ -54,22 +68,6 @@ public class AdminServiceImplTest {
         Assertions.assertEquals(expectedAdminResponseDtos.get(1), (resultAdminResponseDtos.get(1)));
     }
 
-    private List<Administrator> createAdmins() {
-        Administrator admin1 = new Administrator(1L, "Anna"
-                , "Smirnova", "anna@ya.ru");
-        Administrator admin2 = new Administrator(2L, "Ivan"
-                , "Ivanov", "ivan@gmail.com");
-        return List.of(admin1, admin2);
-    }
-
-    private List<AdminResponseDto> createAdminDtos() {
-        AdminResponseDto adminResponseDto1 = new AdminResponseDto(1L, "Anna"
-                , "Smirnova");
-        AdminResponseDto adminResponseDto2 = new AdminResponseDto(2L, "Ivan"
-                , "Ivanov");
-        return List.of(adminResponseDto1, adminResponseDto2);
-    }
-
 
     // Test for the method saveAdmin(AdminRequestDto adminDto)
     @Test
@@ -77,12 +75,14 @@ public class AdminServiceImplTest {
         //given
         Administrator admin = new Administrator(1L, "Petr"
                 , "Petrov", "petr@ya.ru");
-        AdminRequestDto expectedAdminDto = new AdminRequestDto(admin.getName()
-                , admin.getSurname(), admin.getEmail());
+
+        Mockito.when(modelMapper.map(admin, AdminRequestDto.class))
+                .thenReturn(new AdminRequestDto("Petr", "Petrov", "petr@ya.ru"));
+
+        AdminRequestDto expectedAdminDto = modelMapper.map(admin, AdminRequestDto.class);
 
         Mockito.when(modelMapper.map(expectedAdminDto, Administrator.class)).thenReturn(admin);
         Mockito.when(adminRepository.save(admin)).thenReturn(admin);
-        Mockito.when(modelMapper.map(admin, AdminRequestDto.class)).thenReturn(expectedAdminDto);
 
         //when
         AdminRequestDto resultSavedAdminDto = adminService.saveAdmin(expectedAdminDto);
@@ -115,13 +115,13 @@ public class AdminServiceImplTest {
     }
 
     @Test
-    public void shouldThrowNoSuchHumanExceptionWhenAdminNotFound() {
+    public void shouldThrowResourceNotFoundExceptionWhenAdminNotFound() {
         //given
-        Long nonExistentAdminId = 3L;
+        Long nonExistentAdminId = 10L;
         Mockito.when(adminRepository.findById(nonExistentAdminId)).thenReturn(Optional.empty());
 
         //when
-        NoSuchHumanException exception = Assertions.assertThrows(NoSuchHumanException.class
+        ResourceNotFoundException exception = Assertions.assertThrows(ResourceNotFoundException.class
                 , () -> adminService.deleteAdmin(nonExistentAdminId));
 
         //then
@@ -160,16 +160,16 @@ public class AdminServiceImplTest {
     }
 
     @Test
-    public void shouldThrowNoSuchHumanExceptionWhenUpdatingNonExistentAdmin() {
+    public void shouldThrowResourceNotFoundExceptionWhenUpdatingNonExistentAdmin() {
         //given
-        Long nonExistentAdminId = 3L;
+        Long nonExistentAdminId = 10L;
         Mockito.when(adminRepository.findById(nonExistentAdminId)).thenReturn(Optional.empty());
 
         AdminUpdateDto updatedAdminDto = new AdminUpdateDto();
         updatedAdminDto.setEmail("updated_email@example.com");
 
         //when
-        NoSuchHumanException exception = Assertions.assertThrows(NoSuchHumanException.class
+        ResourceNotFoundException exception = Assertions.assertThrows(ResourceNotFoundException.class
                 , () -> adminService.updateAdmin(nonExistentAdminId, updatedAdminDto));
 
         //then
@@ -178,4 +178,44 @@ public class AdminServiceImplTest {
     }
 
 
+    // Test for the method addCourseToAdmin(Long admin_id, Long course_id)
+    @Test
+    public void shouldAddCourseToAdmin() {
+        //given
+        Long adminId = 1L;
+        Long courseId = 1L;
+
+        Administrator admin = new Administrator(adminId, "Anna"
+                , "Smirnova", "anna@ya.ru");
+        Course course = new Course(courseId, "Course1", null);
+
+        admin.getCourses().add(course);
+
+        Mockito.when(adminRepository.findById(adminId)).thenReturn(Optional.of(admin));
+        Mockito.when(courseRepository.findById(courseId)).thenReturn(Optional.of(course));
+        Mockito.when(courseRepository.save(course)).thenReturn(course);
+        Mockito.when(adminRepository.save(admin)).thenReturn(admin);
+
+        Mockito.when(modelMapper.map(admin, AdminResponseDto.class))
+                .thenReturn(new AdminResponseDto(adminId, "Anna", "Smirnova"));
+
+        AdminResponseDto adminDto = modelMapper.map(admin, AdminResponseDto.class);
+
+        Mockito.when(modelMapper.map(course, CourseResponseDto.class))
+                .thenReturn(new CourseResponseDto(courseId, "Course1", adminDto));
+
+        CourseResponseDto expectedCourseDto = modelMapper.map(course, CourseResponseDto.class);
+
+        //when
+        CourseResponseDto resultCourseDto = adminService.addCourseToAdmin(adminId, courseId);
+
+        //then
+        Assertions.assertEquals(expectedCourseDto, resultCourseDto);
+        Assertions.assertEquals(expectedCourseDto.getId(), resultCourseDto.getId());
+        Assertions.assertEquals(expectedCourseDto.getName(), resultCourseDto.getName());
+        Mockito.verify(adminRepository).findById(adminId);
+        Mockito.verify(courseRepository).findById(courseId);
+        Mockito.verify(courseRepository).save(course);
+        Mockito.verify(adminRepository).save(admin);
+    }
 }

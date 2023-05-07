@@ -1,4 +1,4 @@
-package com.alex.courses.dto;
+package com.alex.courses.dto.adminDto;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

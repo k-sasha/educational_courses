@@ -5,3 +5,7 @@ databaseChangeLog: #параметр в котором находятся миг
       file: db/changelog/changeset/create-sequence-admin_seq.yaml
   - include:
       file: db/changelog/changeset/add-column-email-admin.yaml
+  - include: # список активных миграций
+      file: db/changelog/changeset/create-courses-table.yaml
+  - include:
+      file: db/changelog/changeset/create-sequence-course_seq.yaml
