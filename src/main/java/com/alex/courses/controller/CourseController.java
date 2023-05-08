@@ -6,7 +6,13 @@ import com.alex.courses.service.CourseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 
 import javax.validation.Valid;
 import java.util.List;
@@ -15,12 +21,15 @@ import java.util.List;
 @RequestMapping("/courses")
 public class CourseController {
     @Autowired
-    private CourseService courseService;
+    private final CourseService courseService;
+
+    public CourseController(CourseService courseService) {
+        this.courseService = courseService;
+    }
 
     @GetMapping
     public ResponseEntity<List<CourseResponseDto>> showAllCourses() {
-        List<CourseResponseDto> allCourses = courseService.getAllCourses();
-        return ResponseEntity.ok(allCourses);
+        return ResponseEntity.ok(courseService.getAllCourses());
     }
 
     @PostMapping
@@ -33,8 +42,7 @@ public class CourseController {
 
     @GetMapping("/{id}")
     public ResponseEntity<CourseResponseDto> getCourse(@PathVariable Long id) {
-        CourseResponseDto courseDto = courseService.getCourse(id);
-        return ResponseEntity.ok(courseDto);
+        return ResponseEntity.ok(courseService.getCourse(id));
     }
 
     @DeleteMapping("/{id}")

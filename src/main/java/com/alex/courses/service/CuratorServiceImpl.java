@@ -17,10 +17,15 @@ import java.util.stream.Collectors;
 public class CuratorServiceImpl implements CuratorService {
 
     @Autowired
-    private CuratorRepository curatorRepository;
+    private final CuratorRepository curatorRepository;
 
     @Autowired
-    private ModelMapper modelMapper;
+    private final ModelMapper modelMapper;
+
+    public CuratorServiceImpl(CuratorRepository curatorRepository, ModelMapper modelMapper) {
+        this.curatorRepository = curatorRepository;
+        this.modelMapper = modelMapper;
+    }
 
     @Override
     public List<CuratorResponseDto> getAllCurators() {

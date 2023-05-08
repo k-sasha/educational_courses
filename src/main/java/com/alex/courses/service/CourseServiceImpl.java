@@ -1,9 +1,7 @@
 package com.alex.courses.service;
 
-import com.alex.courses.dto.adminDto.AdminResponseDto;
 import com.alex.courses.dto.courseDto.CourseRequestDto;
 import com.alex.courses.dto.courseDto.CourseResponseDto;
-import com.alex.courses.entity.Administrator;
 import com.alex.courses.entity.Course;
 import com.alex.courses.exseption_handling.ResourceNotFoundException;
 import com.alex.courses.repository.CourseRepository;
@@ -18,10 +16,15 @@ import java.util.stream.Collectors;
 public class CourseServiceImpl implements CourseService{
 
     @Autowired
-    private CourseRepository courseRepository;
+    private final CourseRepository courseRepository;
 
     @Autowired
-    private ModelMapper modelMapper;
+    private final ModelMapper modelMapper;
+
+    public CourseServiceImpl(CourseRepository courseRepository, ModelMapper modelMapper) {
+        this.courseRepository = courseRepository;
+        this.modelMapper = modelMapper;
+    }
 
 
     @Override

@@ -20,13 +20,20 @@ import java.util.stream.Collectors;
 public class AdminServiceImpl implements AdminService {
 
     @Autowired
-    private AdminRepository adminRepository;
+    private final AdminRepository adminRepository;
 
     @Autowired
-    private CourseRepository courseRepository;
+    private final CourseRepository courseRepository;
 
     @Autowired
-    private ModelMapper modelMapper;
+    private final ModelMapper modelMapper;
+
+    public AdminServiceImpl(AdminRepository adminRepository
+            , CourseRepository courseRepository, ModelMapper modelMapper) {
+        this.adminRepository = adminRepository;
+        this.courseRepository = courseRepository;
+        this.modelMapper = modelMapper;
+    }
 
     @Override
     public List<AdminResponseDto> getAllAdmins() {
