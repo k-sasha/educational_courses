@@ -9,3 +9,7 @@ databaseChangeLog: #параметр в котором находятся миг
       file: db/changelog/changeset/create-courses-table.yaml
   - include:
       file: db/changelog/changeset/create-sequence-course_seq.yaml
+  - include: # список активных миграций
+      file: db/changelog/changeset/create-curator-table.yaml
+  - include:
+      file: db/changelog/changeset/create-sequence-curator_seq.yaml

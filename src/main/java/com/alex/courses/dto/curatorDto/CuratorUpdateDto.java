@@ -1,4 +1,4 @@
-package com.alex.courses.dto.adminDto;
+package com.alex.courses.dto.curatorDto;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -12,7 +12,7 @@ import javax.validation.constraints.NotBlank;
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
-public class AdminUpdateDto {
+public class CuratorUpdateDto {
 
     private Long id;
 

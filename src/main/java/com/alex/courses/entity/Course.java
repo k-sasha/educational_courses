@@ -5,9 +5,15 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import javax.persistence.*;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.Size;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
+import javax.persistence.Column;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.SequenceGenerator;
+import javax.persistence.ManyToOne;
+import javax.persistence.JoinColumn;
 
 @Entity
 @Table(name = "courses")
@@ -20,8 +26,6 @@ public class Course {
     private Long id;
 
     @Column(name = "name")
-    @NotBlank(message = "name is required")
-    @Size(min = 2, message = "name must be min 2 symbols")
     private String name;
 
     @ManyToOne

@@ -1,11 +1,11 @@
-package com.alex.courses.dto.courseDto;
+package com.alex.courses.dto.curatorDto;
 
-import com.alex.courses.dto.adminDto.AdminResponseDto;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 
@@ -13,11 +13,17 @@ import javax.validation.constraints.Size;
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
-public class CourseRequestDto {
+public class CuratorRequestDto {
 
     @NotBlank(message = "name is required")
     @Size(min = 2, message = "name must be min 2 symbols")
     private String name;
 
-    private AdminResponseDto adminResponseDto;
+    @NotBlank(message = "surname is required")
+    @Size(min = 2, message = "surname must be min 2 symbols")
+    private String surname;
+
+    @NotBlank(message = "email is required")
+    @Email(message = "please enter a valid email address")
+    private String email;
 }

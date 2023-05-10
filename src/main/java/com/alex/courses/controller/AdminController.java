@@ -8,7 +8,14 @@ import com.alex.courses.service.AdminService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 
 import javax.validation.Valid;
 import java.util.List;
@@ -17,12 +24,15 @@ import java.util.List;
 @RequestMapping("/administrators")
 public class AdminController {
     @Autowired
-    private AdminService adminService;
+    private final AdminService adminService;
+
+    public AdminController(AdminService adminService) {
+        this.adminService = adminService;
+    }
 
     @GetMapping
     public ResponseEntity<List<AdminResponseDto>> showAllAdmins() {
-        List<AdminResponseDto> allAdmins = adminService.getAllAdmins();
-        return ResponseEntity.ok(allAdmins);
+        return ResponseEntity.ok(adminService.getAllAdmins());
 
     }
 
@@ -36,14 +46,12 @@ public class AdminController {
     @PutMapping("/{id}")
     public ResponseEntity<AdminUpdateDto> updateAdmin(@PathVariable Long id,
                                                       @Valid @RequestBody AdminUpdateDto admin) {
-        AdminUpdateDto updatedAdmin = adminService.updateAdmin(id, admin);
-        return ResponseEntity.ok(updatedAdmin);
+        return ResponseEntity.ok(adminService.updateAdmin(id, admin));
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<AdminResponseDto> getAdmin(@PathVariable Long id) {
-        AdminResponseDto admin = adminService.getAdmin(id);
-        return ResponseEntity.ok(admin);
+        return ResponseEntity.ok(adminService.getAdmin(id));
     }
 
     @DeleteMapping("/{id}")
@@ -55,7 +63,6 @@ public class AdminController {
     @PutMapping("/admin/{admin_id}/addCourse/{course_id}")
     public ResponseEntity<CourseResponseDto> addCourseToAdmin(@PathVariable Long admin_id,
                                                               @PathVariable Long course_id) {
-        CourseResponseDto newCourse = adminService.addCourseToAdmin(admin_id, course_id);
-        return ResponseEntity.ok(newCourse);
+        return ResponseEntity.ok(adminService.addCourseToAdmin(admin_id, course_id));
     }
 }

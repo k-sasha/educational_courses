@@ -1,6 +1,5 @@
-package com.alex.courses.dto.courseDto;
+package com.alex.courses.dto.curatorDto;
 
-import com.alex.courses.dto.adminDto.AdminResponseDto;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -10,11 +9,9 @@ import lombok.Setter;
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
-public class CourseResponseDto {
+public class CuratorResponseDto {
 
     private Long id;
     private String name;
-    private AdminResponseDto admin;
-
+    private String surname;
 }
-
