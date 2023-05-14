@@ -9,6 +9,7 @@ import com.alex.courses.exseption_handling.ResourceNotFoundException;
 import com.alex.courses.repository.CourseCuratorRepository;
 import com.alex.courses.repository.CourseRepository;
 import com.alex.courses.repository.CuratorRepository;
+import com.fasterxml.jackson.databind.exc.InvalidFormatException;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -49,8 +50,8 @@ public class CourseCuratorServiceImpl implements CourseCuratorService {
 
     @Override
     public CourseCuratorResponseDto saveCourseCurator(CourseCuratorRequestDto courseCuratorDto) {
-        Long courseId = courseCuratorDto.getCourseId();
-        Long curatorId = courseCuratorDto.getCuratorId();
+        Long courseId = Long.valueOf(courseCuratorDto.getCourseId());
+        Long curatorId = Long.valueOf(courseCuratorDto.getCuratorId());
 
         Course existingCourse = courseRepository.findById(courseId).orElseThrow(
                 () -> new ResourceNotFoundException("There is no course with id = " + courseId));

@@ -6,15 +6,18 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Pattern;
 
 @Setter
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
 public class CourseCuratorRequestDto {
-    @NotBlank(message = "courseId is required")
-    private Long courseId;
+    @NotBlank(message = "course's id is required")
+    @Pattern(regexp = "\\d+", message = "courseId must be a number")
+    private String courseId;
 
-    @NotBlank(message = "curatorId is required")
-    private Long curatorId;
+    @NotBlank(message = "curator's id is required")
+    @Pattern(regexp = "\\d+", message = "curatorId must be a number")
+    private String curatorId;
 }

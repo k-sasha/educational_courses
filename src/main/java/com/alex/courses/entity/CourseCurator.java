@@ -26,10 +26,10 @@ public class CourseCurator {
     private Long id;
 
     @ManyToOne
-    @JoinColumn(name = "course_id", nullable = false)
+    @JoinColumn(name = "course_id")
     private Course course;
 
     @ManyToOne
-    @JoinColumn(name = "curator_id", nullable = false)
+    @JoinColumn(name = "curator_id")
     private Curator curator;
 }
