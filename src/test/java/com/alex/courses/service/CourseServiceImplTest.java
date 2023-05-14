@@ -5,6 +5,7 @@ import com.alex.courses.dto.courseDto.CourseResponseDto;
 import com.alex.courses.entity.Course;
 import com.alex.courses.exseption_handling.ResourceNotFoundException;
 import com.alex.courses.repository.CourseRepository;
+import com.alex.courses.service.course.CourseServiceImpl;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;

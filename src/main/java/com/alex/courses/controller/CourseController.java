@@ -2,7 +2,7 @@ package com.alex.courses.controller;
 
 import com.alex.courses.dto.courseDto.CourseRequestDto;
 import com.alex.courses.dto.courseDto.CourseResponseDto;
-import com.alex.courses.service.CourseService;
+import com.alex.courses.service.course.CourseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

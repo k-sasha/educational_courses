@@ -1,4 +1,4 @@
-package com.alex.courses.service;
+package com.alex.courses.service.admin;
 
 import com.alex.courses.dto.adminDto.AdminRequestDto;
 import com.alex.courses.dto.adminDto.AdminResponseDto;
@@ -9,6 +9,7 @@ import com.alex.courses.entity.Course;
 import com.alex.courses.exseption_handling.ResourceNotFoundException;
 import com.alex.courses.repository.AdminRepository;
 import com.alex.courses.repository.CourseRepository;
+import com.alex.courses.service.admin.AdminService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
