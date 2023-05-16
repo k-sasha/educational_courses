@@ -9,7 +9,6 @@ import com.alex.courses.exseption_handling.ResourceNotFoundException;
 import com.alex.courses.repository.CourseCuratorRepository;
 import com.alex.courses.repository.CourseRepository;
 import com.alex.courses.repository.CuratorRepository;
-import com.fasterxml.jackson.databind.exc.InvalidFormatException;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

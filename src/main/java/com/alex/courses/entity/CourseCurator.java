@@ -32,4 +32,10 @@ public class CourseCurator {
     @ManyToOne
     @JoinColumn(name = "curator_id")
     private Curator curator;
+
+    public CourseCurator(Long id, Course course, Curator curator) {
+        this.id = id;
+        this.course = course;
+        this.curator = curator;
+    }
 }
