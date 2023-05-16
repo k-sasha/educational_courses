@@ -5,15 +5,27 @@ import com.alex.courses.dto.courseCuratorDto.CourseCuratorResponseDto;
 import com.alex.courses.entity.Course;
 import com.alex.courses.entity.CourseCurator;
 import com.alex.courses.entity.Curator;
+import com.alex.courses.exseption_handling.ResourceNotFoundException;
+import com.alex.courses.repository.CourseRepository;
+import com.alex.courses.repository.CuratorRepository;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.modelmapper.ModelMapper;
 
+import java.util.Optional;
+
 @ExtendWith(MockitoExtension.class)
 public class ModelMapperCourseCuratorTest {
+    @Mock
+    private CourseRepository courseRepository;
+
+    @Mock
+    private CuratorRepository curatorRepository;
 
     @InjectMocks
     private ModelMapper modelMapper;
@@ -21,16 +33,30 @@ public class ModelMapperCourseCuratorTest {
     @Test
     public void shouldMapCourseCuratorRequestDtoToCourseCurator() {
         // given
+        Curator curator = new Curator(2L, "Anna", "Smirnova", "anna@ya.ru");
+        Course course = new Course(1L, "Course1", null);
+
         CourseCuratorRequestDto courseCuratorDto = new CourseCuratorRequestDto();
-        courseCuratorDto.setCourseId("1");
-        courseCuratorDto.setCuratorId("2");
+        courseCuratorDto.setCourseId(1L);
+        courseCuratorDto.setCuratorId(2L);
+
+        Mockito.when(courseRepository.findById(1L)).thenReturn(Optional.of(course));
+        Mockito.when(curatorRepository.findById(2L)).thenReturn(Optional.of(curator));
 
         // when
-        CourseCurator courseCurator = modelMapper.map(courseCuratorDto, CourseCurator.class);
+        Course existingCourse = courseRepository.findById(courseCuratorDto.getCourseId())
+                .orElseThrow(() -> new ResourceNotFoundException("There is no course with id = " + courseCuratorDto.getCourseId()));
+
+        Curator existingCurator = curatorRepository.findById(courseCuratorDto.getCuratorId())
+                .orElseThrow(() -> new ResourceNotFoundException("There is no curator with id = " + courseCuratorDto.getCuratorId()));
+
+        CourseCurator courseCurator = new CourseCurator();
+        courseCurator.setCourse(existingCourse);
+        courseCurator.setCurator(existingCurator);
 
         // then
-        Assertions.assertEquals(Long.parseLong(courseCuratorDto.getCourseId()), courseCurator.getCourse().getId());
-        Assertions.assertEquals(Long.parseLong(courseCuratorDto.getCuratorId()), courseCurator.getCurator().getId());
+        Assertions.assertEquals(courseCuratorDto.getCourseId(), courseCurator.getCourse().getId());
+        Assertions.assertEquals(courseCuratorDto.getCuratorId(), courseCurator.getCurator().getId());
     }
 
     @Test

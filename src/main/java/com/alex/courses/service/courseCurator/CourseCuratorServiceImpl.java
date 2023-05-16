@@ -12,6 +12,7 @@ import com.alex.courses.repository.CuratorRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -48,9 +49,10 @@ public class CourseCuratorServiceImpl implements CourseCuratorService {
     }
 
     @Override
+    @Transactional
     public CourseCuratorResponseDto saveCourseCurator(CourseCuratorRequestDto courseCuratorDto) {
-        Long courseId = Long.valueOf(courseCuratorDto.getCourseId());
-        Long curatorId = Long.valueOf(courseCuratorDto.getCuratorId());
+        Long courseId = courseCuratorDto.getCourseId();
+        Long curatorId = courseCuratorDto.getCuratorId();
 
         Course existingCourse = courseRepository.findById(courseId).orElseThrow(
                 () -> new ResourceNotFoundException("There is no course with id = " + courseId));
@@ -75,11 +77,8 @@ public class CourseCuratorServiceImpl implements CourseCuratorService {
 
     @Override
     public void deleteCourseCurator(Long id) {
-        CourseCurator courseCurator = courseCuratorRepository.findById(id).orElseThrow(
+      courseCuratorRepository.findById(id).orElseThrow(
                 () -> new ResourceNotFoundException("There is no course-curator with id = " + id));
-        courseCurator.setCourse(null);
-        courseCurator.setCurator(null);
-        CourseCurator emptyCourseCurator = courseCuratorRepository.save(courseCurator);
-        courseCuratorRepository.deleteById(emptyCourseCurator.getId());
+        courseCuratorRepository.deleteById(id);
     }
 }

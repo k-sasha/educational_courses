@@ -101,7 +101,7 @@ public class CourseCuratorServiceImplTest {
         Mockito.when(courseCuratorRepository.save(any(CourseCurator.class))).thenReturn(courseCurator);
 
         // when
-        CourseCuratorRequestDto requestDto = new CourseCuratorRequestDto(courseId.toString(), curatorId.toString());
+        CourseCuratorRequestDto requestDto = new CourseCuratorRequestDto(courseId, curatorId);
         CourseCuratorResponseDto resultSavedResponseDto = courseCuratorService.saveCourseCurator(requestDto);
 
         // then
@@ -116,9 +116,6 @@ public class CourseCuratorServiceImplTest {
         Long existingCourseCuratorId = 1L;
         CourseCurator existingCourseCurator = new CourseCurator(existingCourseCuratorId, new Course(), new Curator());
         Mockito.when(courseCuratorRepository.findById(existingCourseCuratorId)).thenReturn(Optional.of(existingCourseCurator));
-
-        CourseCurator emptyCourseCurator = new CourseCurator(existingCourseCuratorId, null, null);
-        Mockito.when(courseCuratorRepository.save(any(CourseCurator.class))).thenReturn(emptyCourseCurator);
 
         //when
         courseCuratorService.deleteCourseCurator(existingCourseCuratorId);
