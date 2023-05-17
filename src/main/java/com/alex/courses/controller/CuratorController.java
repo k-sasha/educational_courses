@@ -3,7 +3,7 @@ package com.alex.courses.controller;
 import com.alex.courses.dto.curatorDto.CuratorRequestDto;
 import com.alex.courses.dto.curatorDto.CuratorResponseDto;
 import com.alex.courses.dto.curatorDto.CuratorUpdateDto;
-import com.alex.courses.service.CuratorService;
+import com.alex.courses.service.curator.CuratorService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

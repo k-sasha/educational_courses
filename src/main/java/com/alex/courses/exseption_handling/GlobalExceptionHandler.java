@@ -1,5 +1,6 @@
 package com.alex.courses.exseption_handling;
 
+import com.fasterxml.jackson.databind.exc.InvalidFormatException;
 import org.hibernate.exception.ConstraintViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -29,6 +30,16 @@ public class GlobalExceptionHandler {
         exception.getBindingResult().getFieldErrors().forEach(error -> {
             errorMap.put(error.getField(), error.getDefaultMessage());
         });
+        return errorMap;
+    }
+
+    // if an incorrect value is entered (for example, a string instead of a number)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ExceptionHandler(InvalidFormatException.class)
+    public Map<String, String> handleInvalidFormatException(InvalidFormatException exception) {
+        Map<String, String> errorMap = new HashMap<>();
+        String field = exception.getPath().isEmpty() ? "unknown" : exception.getPath().get(0).getFieldName();
+        errorMap.put(field, "Invalid value. Expected type: " + exception.getTargetType().getSimpleName());
         return errorMap;
     }
 

@@ -4,7 +4,7 @@ import com.alex.courses.dto.courseDto.CourseResponseDto;
 import com.alex.courses.dto.adminDto.AdminRequestDto;
 import com.alex.courses.dto.adminDto.AdminResponseDto;
 import com.alex.courses.dto.adminDto.AdminUpdateDto;
-import com.alex.courses.service.AdminService;
+import com.alex.courses.service.admin.AdminService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

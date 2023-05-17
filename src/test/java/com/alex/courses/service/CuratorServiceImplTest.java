@@ -6,6 +6,7 @@ import com.alex.courses.dto.curatorDto.CuratorUpdateDto;
 import com.alex.courses.entity.Curator;
 import com.alex.courses.exseption_handling.ResourceNotFoundException;
 import com.alex.courses.repository.CuratorRepository;
+import com.alex.courses.service.curator.CuratorServiceImpl;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;

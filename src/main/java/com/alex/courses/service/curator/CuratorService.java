@@ -1,4 +1,4 @@
-package com.alex.courses.service;
+package com.alex.courses.service.curator;
 
 import com.alex.courses.dto.curatorDto.CuratorRequestDto;
 import com.alex.courses.dto.curatorDto.CuratorResponseDto;

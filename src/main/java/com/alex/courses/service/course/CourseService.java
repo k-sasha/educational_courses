@@ -1,4 +1,4 @@
-package com.alex.courses.service;
+package com.alex.courses.service.course;
 import com.alex.courses.dto.courseDto.CourseRequestDto;
 import com.alex.courses.dto.courseDto.CourseResponseDto;
 
