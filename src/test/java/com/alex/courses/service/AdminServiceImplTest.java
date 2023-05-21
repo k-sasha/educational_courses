@@ -26,6 +26,10 @@ import java.util.Optional;
 @ExtendWith(MockitoExtension.class) // for work annotations @Mock and @InjectMocks
 public class AdminServiceImplTest {
 
+    @InjectMocks //i.e. upload this mocks (adminRepository and modelMapper)
+    // to the service (adminService)
+    private AdminServiceImpl adminService;
+
     @Mock
     private AdminRepository adminRepository;
 
@@ -34,10 +38,6 @@ public class AdminServiceImplTest {
 
     @Mock
     private CourseRepository courseRepository;
-
-    @InjectMocks //i.e. upload this mocks (adminRepository and modelMapper)
-    // to the service (adminService)
-    private AdminServiceImpl adminService;
 
     // Test for the methods getAllAdmins() and getAdmin(Long id)
     @Test

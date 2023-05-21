@@ -23,15 +23,15 @@ import java.util.Optional;
 @ExtendWith(MockitoExtension.class) // for work annotations @Mock and @InjectMocks
 public class CuratorServiceImplTest {
 
+    @InjectMocks //i.e. upload this mocks (curatorRepository and modelMapper)
+    // to the service (curatorService)
+    private CuratorServiceImpl curatorService;
+
     @Mock
     private CuratorRepository curatorRepository;
 
     @Mock
     private ModelMapper modelMapper;
-
-    @InjectMocks //i.e. upload this mocks (curatorRepository and modelMapper)
-    // to the service (curatorService)
-    private CuratorServiceImpl curatorService;
 
     // Test for the methods getAllCurators() and getCurator(Long id)
     @Test

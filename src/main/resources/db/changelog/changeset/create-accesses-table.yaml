@@ -1,0 +1,25 @@
+databaseChangeLog:
+  - changeSet:
+      id: create-author #текстовый идентификатор (Обязателен)
+      author: Aleksanra Anisimova # автор (Обязателен)
+      changes:
+        - createTable: # создаем новую таблицу
+            tableName: accesses
+            columns: # объявления колонок
+              - column:
+                  name: id
+                  type: bigint
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: plan_name
+                  type: varchar(100)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: available_lessons_count
+                  type: bigint
+                  constraints:
+                    nullable: false

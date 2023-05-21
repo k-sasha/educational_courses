@@ -30,6 +30,9 @@ import java.util.Optional;
 @ExtendWith(MockitoExtension.class)
 public class CourseCuratorServiceImplTest {
 
+    @InjectMocks
+    private CourseCuratorServiceImpl courseCuratorService;
+
     @Mock
     private ModelMapper modelMapper;
 
@@ -41,9 +44,6 @@ public class CourseCuratorServiceImplTest {
 
     @Mock
     private CuratorRepository curatorRepository;
-
-    @InjectMocks
-    private CourseCuratorServiceImpl courseCuratorService;
 
     @Test
     public void shouldReturnAllCoursesCuratorsOrCourseCuratorById() {
