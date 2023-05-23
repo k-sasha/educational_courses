@@ -22,16 +22,15 @@ import java.util.Optional;
 @ExtendWith(MockitoExtension.class) // for work annotations @Mock and @InjectMocks
 public class CourseServiceImplTest {
 
+    @InjectMocks //i.e. upload this mocks (adminRepository and modelMapper)
+    // to the service (adminService)
+    private CourseServiceImpl courseService;
+
     @Mock
     private ModelMapper modelMapper;
 
     @Mock
     private CourseRepository courseRepository;
-
-
-    @InjectMocks //i.e. upload this mocks (adminRepository and modelMapper)
-    // to the service (adminService)
-    private CourseServiceImpl courseService;
 
     // Test for the methods getAllCourses() and getCourse(Long id)
     @Test

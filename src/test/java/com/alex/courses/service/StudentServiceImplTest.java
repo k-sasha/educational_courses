@@ -23,15 +23,15 @@ import java.util.Optional;
 @ExtendWith(MockitoExtension.class) // for work annotations @Mock and @InjectMocks
 public class StudentServiceImplTest {
 
+    @InjectMocks //i.e. upload this mocks (studentRepository and modelMapper)
+    // to the service (studentService)
+    private StudentServiceImpl studentService;
+
     @Mock
     private StudentRepository studentRepository;
 
     @Mock
     private ModelMapper modelMapper;
-
-    @InjectMocks //i.e. upload this mocks (studentRepository and modelMapper)
-    // to the service (studentService)
-    private StudentServiceImpl studentService;
 
     // Test for the methods getAllStudents() and getStudent(Long id)
     @Test

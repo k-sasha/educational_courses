@@ -21,14 +21,15 @@ import java.util.Optional;
 
 @ExtendWith(MockitoExtension.class)
 public class ModelMapperCourseCuratorTest {
+
+    @InjectMocks
+    private ModelMapper modelMapper;
+
     @Mock
     private CourseRepository courseRepository;
 
     @Mock
     private CuratorRepository curatorRepository;
-
-    @InjectMocks
-    private ModelMapper modelMapper;
 
     @Test
     public void shouldMapCourseCuratorRequestDtoToCourseCurator() {
