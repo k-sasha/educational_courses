@@ -1,0 +1,27 @@
+databaseChangeLog:
+  - changeSet:
+      id: create-author
+      author: Aleksanra Anisimova
+      changes:
+        - createTable:
+            tableName: lessons
+            columns:
+              - column:
+                  name: id
+                  type: bigint
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: lesson_name
+                  type: varchar(100)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: course_id
+                  type: bigint
+                  constraints:
+                    foreignKeyName: fk_course_curator_course
+                    referencedTableName: courses
+                    referencedColumnNames: id
