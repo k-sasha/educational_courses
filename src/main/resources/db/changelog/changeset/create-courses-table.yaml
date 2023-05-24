@@ -1,0 +1,27 @@
+databaseChangeLog:
+  - changeSet:
+      id: create-course #текстовый идентификатор (Обязателен)
+      author: Aleksanra Anisimova # автор (Обязателен)
+      changes:
+        - createTable: # создаем новую таблицу
+            tableName: courses
+            columns: # объявления колонок
+              - column:
+                  name: id
+                  type: bigint
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: name
+                  type: varchar(100)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: admin_id
+                  type: bigint
+                  constraints:
+                     foreignKeyName: admin_course_fk
+                     referencedTableName: administrators
+                     referencedColumnNames: id

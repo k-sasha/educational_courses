@@ -11,18 +11,16 @@ import javax.persistence.Column;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.SequenceGenerator;
-import javax.persistence.OneToMany;
-import java.util.HashSet;
-import java.util.Set;
 
 @Entity
-@Table(name = "administrators")
-@Getter @Setter
+@Table(name = "students")
+@Getter
+@Setter
 @NoArgsConstructor
-public class Administrator {
+public class Student {
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "adminSeq")
-    @SequenceGenerator(name = "adminSeq", sequenceName = "admin_seq", allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "studentSeq")
+    @SequenceGenerator(name = "studentSeq", sequenceName = "student_seq", allocationSize = 1)
     @Column(name = "id")
     private Long id;
 
@@ -35,10 +33,7 @@ public class Administrator {
     @Column(name = "email")
     private String email;
 
-    @OneToMany(mappedBy = "admin")
-    private Set<Course> courses = new HashSet<>();
-
-    public Administrator(Long id, String name, String surname, String email) {
+    public Student(Long id, String name, String surname, String email) {
         this.id = id;
         this.name = name;
         this.surname = surname;

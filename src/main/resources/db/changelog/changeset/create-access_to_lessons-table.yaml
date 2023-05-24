@@ -1,0 +1,29 @@
+databaseChangeLog:
+  - changeSet:
+      id: create-access_to_lesson
+      author: Aleksanra Anisimova
+      changes:
+        - createTable:
+            tableName: access_to_lessons
+            columns:
+              - column:
+                  name: id
+                  type: bigint
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: lesson_id
+                  type: bigint
+                  constraints:
+                    foreignKeyName: fk_access_to_lessons_lesson
+                    referencedTableName: lessons
+                    referencedColumnNames: id
+              - column:
+                  name: access_id
+                  type: bigint
+                  constraints:
+                    foreignKeyName: fk_access_to_lessons_access
+                    referencedTableName: accesses
+                    referencedColumnNames: id

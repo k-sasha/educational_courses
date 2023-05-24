@@ -5,3 +5,32 @@ databaseChangeLog: #параметр в котором находятся миг
       file: db/changelog/changeset/create-sequence-admin_seq.yaml
   - include:
       file: db/changelog/changeset/add-column-email-admin.yaml
+  - include: # список активных миграций
+      file: db/changelog/changeset/create-courses-table.yaml
+  - include:
+      file: db/changelog/changeset/create-sequence-course_seq.yaml
+  - include: # список активных миграций
+      file: db/changelog/changeset/create-curator-table.yaml
+  - include:
+      file: db/changelog/changeset/create-sequence-curator_seq.yaml
+  - include: # список активных миграций
+      file: db/changelog/changeset/create-course_curator-table.yaml
+  - include:
+      file: db/changelog/changeset/create-sequence-course_curator_seq.yaml
+  - include: # список активных миграций
+      file: db/changelog/changeset/create-students-table.yaml
+  - include:
+      file: db/changelog/changeset/create-sequence-student_seq.yaml
+  - include: # список активных миграций
+      file: db/changelog/changeset/create-accesses-table.yaml
+  - include:
+      file: db/changelog/changeset/create-sequence-access_seq.yaml
+  - include: # список активных миграций
+      file: db/changelog/changeset/create-lessons-table.yaml
+  - include:
+      file: db/changelog/changeset/create-sequence-lesson_seq.yaml
+  - include: # список активных миграций
+      file: db/changelog/changeset/create-access_to_lessons-table.yaml
+  - include:
+      file: db/changelog/changeset/create-sequence-access_to_lesson_seq.yaml
+

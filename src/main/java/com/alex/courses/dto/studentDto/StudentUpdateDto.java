@@ -1,11 +1,10 @@
-package com.alex.courses.dto;
+package com.alex.courses.dto.studentDto;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 
@@ -13,12 +12,10 @@ import javax.validation.constraints.NotBlank;
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
-public class AdminUpdateDto {
+public class StudentUpdateDto {
 
-    @Column(name = "id")
     private Long id;
 
-    @Column(name = "email")
     @NotBlank(message = "email is required")
     @Email(message = "please enter a valid email address")
     private String email;

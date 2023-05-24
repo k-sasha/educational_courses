@@ -1,0 +1,29 @@
+databaseChangeLog:
+  - changeSet:
+      id: create-course_curator
+      author: Aleksanra Anisimova
+      changes:
+        - createTable:
+            tableName: course_curator
+            columns:
+              - column:
+                  name: id
+                  type: bigint
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: course_id
+                  type: bigint
+                  constraints:
+                    foreignKeyName: fk_course_curator_course
+                    referencedTableName: courses
+                    referencedColumnNames: id
+              - column:
+                  name: curator_id
+                  type: bigint
+                  constraints:
+                    foreignKeyName: fk_course_curator_curator
+                    referencedTableName: curators
+                    referencedColumnNames: id
