@@ -1,0 +1,10 @@
+databaseChangeLog:
+  - changeSet:
+      id: create-student-access-binding-sequence #текстовый идентификатор (Обязателен)
+      author: Aleksanra Anisimova # автор (Обязателен)
+      changes:
+        - createSequence: # создаем новую последовательность
+            sequenceName: student-access_binding_seq
+            incrementBy: 1
+            maxValue: 1000
+            startValue: 1
