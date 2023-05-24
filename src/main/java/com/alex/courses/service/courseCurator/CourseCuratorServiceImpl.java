@@ -41,7 +41,7 @@ public class CourseCuratorServiceImpl implements CourseCuratorService {
     }
 
     @Override
-    public List<CourseCuratorResponseDto> getAllCoursesCurators() {
+    public List<CourseCuratorResponseDto> getAll() {
         List<CourseCurator> courseCurators = courseCuratorRepository.findAll();
         return courseCurators.stream().map((courseCurator)
                         -> modelMapper.map(courseCurator, CourseCuratorResponseDto.class))
@@ -50,7 +50,7 @@ public class CourseCuratorServiceImpl implements CourseCuratorService {
 
     @Override
     @Transactional
-    public CourseCuratorResponseDto saveCourseCurator(CourseCuratorRequestDto courseCuratorDto) {
+    public CourseCuratorResponseDto save(CourseCuratorRequestDto courseCuratorDto) {
         Long courseId = courseCuratorDto.getCourseId();
         Long curatorId = courseCuratorDto.getCuratorId();
 
@@ -69,14 +69,14 @@ public class CourseCuratorServiceImpl implements CourseCuratorService {
     }
 
     @Override
-    public CourseCuratorResponseDto getCourseCurator(Long id) {
+    public CourseCuratorResponseDto get(Long id) {
         CourseCurator courseCurator = courseCuratorRepository.findById(id).orElseThrow(
                 () -> new ResourceNotFoundException("There is no course-curator with id = " + id));
         return modelMapper.map(courseCurator, CourseCuratorResponseDto.class);
     }
 
     @Override
-    public void deleteCourseCurator(Long id) {
+    public void delete(Long id) {
       courseCuratorRepository.findById(id).orElseThrow(
                 () -> new ResourceNotFoundException("There is no course-curator with id = " + id));
         courseCuratorRepository.deleteById(id);

@@ -41,6 +41,7 @@ public class ModelMapperLessonTest {
 
         Lesson lesson = new Lesson();
         lesson.setCourse(existingCourse);
+        lesson.setLessonName(lessonDto.getLessonName());
 
         // then
         Assertions.assertEquals(lessonDto.getCourseId(), lesson.getCourse().getId());

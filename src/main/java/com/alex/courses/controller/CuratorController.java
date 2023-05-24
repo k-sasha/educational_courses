@@ -31,13 +31,13 @@ public class CuratorController {
 
     @GetMapping
     public ResponseEntity<List<CuratorResponseDto>> showAllCurators() {
-        return ResponseEntity.ok(curatorService.getAllCurators());
+        return ResponseEntity.ok(curatorService.getAll());
 
     }
 
     @PostMapping
     public ResponseEntity<String> addCurator(@Valid @RequestBody CuratorRequestDto curator) {
-        CuratorRequestDto newCurator = curatorService.saveCurator(curator);
+        CuratorRequestDto newCurator = curatorService.save(curator);
         String name = newCurator.getName();
         return ResponseEntity.status(HttpStatus.CREATED).body("Curator " + name + " was created");
     }
@@ -45,17 +45,17 @@ public class CuratorController {
     @PutMapping("/{id}")
     public ResponseEntity<CuratorUpdateDto> updateCurator(@PathVariable Long id,
                                                         @Valid @RequestBody CuratorUpdateDto curator) {
-        return ResponseEntity.ok(curatorService.updateCurator(id, curator));
+        return ResponseEntity.ok(curatorService.update(id, curator));
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<CuratorResponseDto> getCurator(@PathVariable Long id) {
-        return ResponseEntity.ok(curatorService.getCurator(id));
+        return ResponseEntity.ok(curatorService.get(id));
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<String> deleteCurator(@PathVariable Long id) {
-        curatorService.deleteCurator(id);
+        curatorService.delete(id);
         return ResponseEntity.ok("Curator with id = " + id + " was deleted");
     }
 

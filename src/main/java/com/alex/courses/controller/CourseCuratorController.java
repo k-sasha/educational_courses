@@ -29,24 +29,24 @@ public class CourseCuratorController {
 
     @GetMapping
     public ResponseEntity<List<CourseCuratorResponseDto>> showAllCoursesCurators() {
-        return ResponseEntity.ok(courseCuratorService.getAllCoursesCurators());
+        return ResponseEntity.ok(courseCuratorService.getAll());
     }
 
     @PostMapping
     public ResponseEntity<CourseCuratorResponseDto> createCourseCurator(@Valid @RequestBody CourseCuratorRequestDto courseCuratorDto) {
-        CourseCuratorResponseDto savedCourseCurator = courseCuratorService.saveCourseCurator(courseCuratorDto);
+        CourseCuratorResponseDto savedCourseCurator = courseCuratorService.save(courseCuratorDto);
         return new ResponseEntity<>(savedCourseCurator, HttpStatus.CREATED);
     }
 
 
     @GetMapping("/{id}")
     public ResponseEntity<CourseCuratorResponseDto> getCourseCurator(@PathVariable Long id) {
-        return ResponseEntity.ok(courseCuratorService.getCourseCurator(id));
+        return ResponseEntity.ok(courseCuratorService.get(id));
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<String> deleteCourseCurator(@PathVariable Long id) {
-        courseCuratorService.deleteCourseCurator(id);
+        courseCuratorService.delete(id);
         return ResponseEntity.ok("Course-curator with id = " + id + " was deleted");
     }
 }

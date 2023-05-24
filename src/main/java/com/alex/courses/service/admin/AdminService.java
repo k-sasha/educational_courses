@@ -9,12 +9,12 @@ import com.alex.courses.dto.adminDto.AdminUpdateDto;
 import java.util.List;
 
 public interface AdminService {
-    List<AdminResponseDto> getAllAdmins();
-    AdminRequestDto saveAdmin(AdminRequestDto adminDto);
-    AdminResponseDto getAdmin(Long id);
-    void deleteAdmin(Long id);
+    List<AdminResponseDto> getAll();
+    AdminRequestDto save(AdminRequestDto adminDto);
+    AdminResponseDto get(Long id);
+    void delete(Long id);
 
-    AdminUpdateDto updateAdmin(Long id, AdminUpdateDto updatedAdminDto);
+    AdminUpdateDto update(Long id, AdminUpdateDto updatedAdminDto);
     CourseResponseDto addCourseToAdmin(Long admin_id, Long course_id);
 
 }

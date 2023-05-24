@@ -7,10 +7,10 @@ import com.alex.courses.dto.curatorDto.CuratorUpdateDto;
 import java.util.List;
 
 public interface CuratorService {
-    List<CuratorResponseDto> getAllCurators();
-    CuratorRequestDto saveCurator(CuratorRequestDto curatorDto);
-    CuratorResponseDto getCurator(Long id);
-    void deleteCurator(Long id);
-    CuratorUpdateDto updateCurator(Long id, CuratorUpdateDto updatedCuratorDto);
+    List<CuratorResponseDto> getAll();
+    CuratorRequestDto save(CuratorRequestDto curatorDto);
+    CuratorResponseDto get(Long id);
+    void delete(Long id);
+    CuratorUpdateDto update(Long id, CuratorUpdateDto updatedCuratorDto);
 
 }

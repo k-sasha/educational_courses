@@ -35,7 +35,7 @@ public class LessonServiceImpl implements LessonService {
     }
 
     @Override
-    public List<LessonResponseDto> getAllLessons() {
+    public List<LessonResponseDto> getAll() {
         List<Lesson> lessons = lessonRepository.findAll();
         return lessons.stream().map((lesson)
                         -> modelMapper.map(lesson, LessonResponseDto.class))
@@ -44,7 +44,7 @@ public class LessonServiceImpl implements LessonService {
 
     @Override
     @Transactional
-    public LessonResponseDto saveLesson(LessonRequestDto lessonDto) {
+    public LessonResponseDto save(LessonRequestDto lessonDto) {
         Long courseId = lessonDto.getCourseId();
 
         Course existingCourse = courseRepository.findById(courseId).orElseThrow(
@@ -52,20 +52,21 @@ public class LessonServiceImpl implements LessonService {
 
         Lesson lesson = new Lesson();
         lesson.setCourse(existingCourse);
+        lesson.setLessonName(lessonDto.getLessonName());
 
         Lesson savedLesson = lessonRepository.save(lesson);
         return modelMapper.map(savedLesson, LessonResponseDto.class);
     }
 
     @Override
-    public LessonResponseDto getLesson(Long id) {
+    public LessonResponseDto get(Long id) {
         Lesson lesson = lessonRepository.findById(id).orElseThrow(
                 () -> new ResourceNotFoundException("There is no lesson with id = " + id));
         return modelMapper.map(lesson, LessonResponseDto.class);
     }
 
     @Override
-    public void deleteLesson(Long id) {
+    public void delete(Long id) {
         lessonRepository.findById(id).orElseThrow(
                 () -> new ResourceNotFoundException("There is no lesson with id = " + id));
         lessonRepository.deleteById(id);

@@ -23,23 +23,23 @@ public class AccessController {
 
     @GetMapping
     public ResponseEntity<List<AccessResponseDto>> showAllAccesses() {
-        return ResponseEntity.ok(accessService.getAllAccesses());
+        return ResponseEntity.ok(accessService.getAll());
     }
 
     @PostMapping
     public ResponseEntity<AccessResponseDto> addAccess(@Valid @RequestBody AccessRequestDto access) {
-        AccessResponseDto newAccess = accessService.saveAccess(access);
+        AccessResponseDto newAccess = accessService.save(access);
         return new ResponseEntity<>(newAccess, HttpStatus.CREATED);
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<AccessResponseDto> getAccess(@PathVariable Long id) {
-        return ResponseEntity.ok(accessService.getAccess(id));
+        return ResponseEntity.ok(accessService.get(id));
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<String> deleteAccess(@PathVariable Long id) {
-        accessService.deleteAccess(id);
+        accessService.delete(id);
         return ResponseEntity.ok("Access with id = " + id + " was deleted");
     }
 

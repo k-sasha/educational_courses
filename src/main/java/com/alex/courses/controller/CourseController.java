@@ -29,12 +29,12 @@ public class CourseController {
 
     @GetMapping
     public ResponseEntity<List<CourseResponseDto>> showAllCourses() {
-        return ResponseEntity.ok(courseService.getAllCourses());
+        return ResponseEntity.ok(courseService.getAll());
     }
 
     @PostMapping
     public ResponseEntity<String> addCourse(@Valid @RequestBody CourseRequestDto courseDto) {
-        CourseResponseDto newCourse = courseService.saveCourse(courseDto);
+        CourseResponseDto newCourse = courseService.save(courseDto);
         Long id = newCourse.getId();
         return ResponseEntity.status(HttpStatus.CREATED).body("Course with id = " + id + " was created");
     }
@@ -42,12 +42,12 @@ public class CourseController {
 
     @GetMapping("/{id}")
     public ResponseEntity<CourseResponseDto> getCourse(@PathVariable Long id) {
-        return ResponseEntity.ok(courseService.getCourse(id));
+        return ResponseEntity.ok(courseService.get(id));
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<String> deleteCourse(@PathVariable Long id) {
-        courseService.deleteCourse(id);
+        courseService.delete(id);
         return ResponseEntity.ok("Course with id = " + id + " was deleted");
     }
 }

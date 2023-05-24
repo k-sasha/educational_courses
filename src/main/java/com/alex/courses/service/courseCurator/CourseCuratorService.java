@@ -6,8 +6,8 @@ import com.alex.courses.dto.courseCuratorDto.CourseCuratorResponseDto;
 import java.util.List;
 
 public interface CourseCuratorService {
-    List<CourseCuratorResponseDto> getAllCoursesCurators();
-    CourseCuratorResponseDto saveCourseCurator(CourseCuratorRequestDto courseCuratorDto);
-    CourseCuratorResponseDto getCourseCurator(Long id);
-    void deleteCourseCurator(Long id);
+    List<CourseCuratorResponseDto> getAll();
+    CourseCuratorResponseDto save(CourseCuratorRequestDto courseCuratorDto);
+    CourseCuratorResponseDto get(Long id);
+    void delete(Long id);
 }

@@ -32,13 +32,13 @@ public class AdminController {
 
     @GetMapping
     public ResponseEntity<List<AdminResponseDto>> showAllAdmins() {
-        return ResponseEntity.ok(adminService.getAllAdmins());
+        return ResponseEntity.ok(adminService.getAll());
 
     }
 
     @PostMapping
     public ResponseEntity<String> addAdmin(@Valid @RequestBody AdminRequestDto admin) {
-        AdminRequestDto newAdmin = adminService.saveAdmin(admin);
+        AdminRequestDto newAdmin = adminService.save(admin);
         String name = newAdmin.getName();
         return ResponseEntity.status(HttpStatus.CREATED).body("Admin " + name + " was created");
     }
@@ -46,17 +46,17 @@ public class AdminController {
     @PutMapping("/{id}")
     public ResponseEntity<AdminUpdateDto> updateAdmin(@PathVariable Long id,
                                                       @Valid @RequestBody AdminUpdateDto admin) {
-        return ResponseEntity.ok(adminService.updateAdmin(id, admin));
+        return ResponseEntity.ok(adminService.update(id, admin));
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<AdminResponseDto> getAdmin(@PathVariable Long id) {
-        return ResponseEntity.ok(adminService.getAdmin(id));
+        return ResponseEntity.ok(adminService.get(id));
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<String> deleteAdmin(@PathVariable Long id) {
-        adminService.deleteAdmin(id);
+        adminService.delete(id);
         return ResponseEntity.ok("Admin with id = " + id + " was deleted");
     }
 

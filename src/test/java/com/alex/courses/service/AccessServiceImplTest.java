@@ -52,7 +52,7 @@ public class AccessServiceImplTest {
         List<AccessResponseDto> expectedAccessResponseDtos = List.of(accessResponseDto1, accessResponseDto2);
 
         //when
-        List<AccessResponseDto> resultAccessResponseDtos = accessService.getAllAccesses();
+        List<AccessResponseDto> resultAccessResponseDtos = accessService.getAll();
 
         //then
         Assertions.assertEquals(2, resultAccessResponseDtos.size());
@@ -78,7 +78,7 @@ public class AccessServiceImplTest {
         Mockito.when(accessRepository.save(access)).thenReturn(access);
 
         //when
-        AccessResponseDto resultSavedAccessDto = accessService.saveAccess(accessRequestDto);
+        AccessResponseDto resultSavedAccessDto = accessService.save(accessRequestDto);
 
         //then
         Assertions.assertEquals(expectedAccessDto.getId(), resultSavedAccessDto.getId());
@@ -97,7 +97,7 @@ public class AccessServiceImplTest {
         Mockito.when(accessRepository.findById(accessId)).thenReturn(optionalAccess);
 
         //when
-        accessService.deleteAccess(accessId);
+        accessService.delete(accessId);
 
         //then
         ArgumentCaptor<Long> argumentCaptor = ArgumentCaptor.forClass(Long.class);
@@ -114,7 +114,7 @@ public class AccessServiceImplTest {
 
         //when
         ResourceNotFoundException exception = Assertions.assertThrows(ResourceNotFoundException.class
-                , () -> accessService.deleteAccess(nonExistentAccessId));
+                , () -> accessService.delete(nonExistentAccessId));
 
         //then
         Assertions.assertEquals("There is no access with id = "

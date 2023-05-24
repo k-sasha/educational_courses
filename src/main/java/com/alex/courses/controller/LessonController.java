@@ -23,24 +23,24 @@ public class LessonController {
 
     @GetMapping
     public ResponseEntity<List<LessonResponseDto>> showAllLessons() {
-        return ResponseEntity.ok(lessonService.getAllLessons());
+        return ResponseEntity.ok(lessonService.getAll());
     }
 
     @PostMapping
     public ResponseEntity<LessonResponseDto> addLesson(@Valid @RequestBody LessonRequestDto lessonDto) {
-        LessonResponseDto savedLesson = lessonService.saveLesson(lessonDto);
+        LessonResponseDto savedLesson = lessonService.save(lessonDto);
         return new ResponseEntity<>(savedLesson, HttpStatus.CREATED);
     }
 
 
     @GetMapping("/{id}")
     public ResponseEntity<LessonResponseDto> getLesson(@PathVariable Long id) {
-        return ResponseEntity.ok(lessonService.getLesson(id));
+        return ResponseEntity.ok(lessonService.get(id));
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<String> deleteLesson(@PathVariable Long id) {
-        lessonService.deleteLesson(id);
+        lessonService.delete(id);
         return ResponseEntity.ok("Lesson with id = " + id + " was deleted");
     }
 }

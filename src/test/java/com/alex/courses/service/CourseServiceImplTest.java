@@ -51,7 +51,7 @@ public class CourseServiceImplTest {
         List<CourseResponseDto> expectedCourseResponseDtos = List.of(courseResponseDto1, courseResponseDto2);
 
         //when
-        List<CourseResponseDto> resultCourseResponseDtos = courseService.getAllCourses();
+        List<CourseResponseDto> resultCourseResponseDtos = courseService.getAll();
 
         //then
 //        Assertions.assertEquals(2, resultCourseResponseDtos.size());
@@ -76,7 +76,7 @@ public class CourseServiceImplTest {
         Mockito.when(courseRepository.save(course)).thenReturn(course);
 
         //when
-        CourseResponseDto resultSavedCourseDto = courseService.saveCourse(courseRequestDto);
+        CourseResponseDto resultSavedCourseDto = courseService.save(courseRequestDto);
 
         //then
         Assertions.assertEquals(expectedCourseDto.getName(), resultSavedCourseDto.getName());
@@ -94,7 +94,7 @@ public class CourseServiceImplTest {
         Mockito.when(courseRepository.findById(courseId)).thenReturn(optionalCourse);
 
         //when
-        courseService.deleteCourse(courseId);
+        courseService.delete(courseId);
 
         //then
         ArgumentCaptor<Long> argumentCaptor = ArgumentCaptor.forClass(Long.class);
@@ -111,7 +111,7 @@ public class CourseServiceImplTest {
 
         //when
         ResourceNotFoundException exception = Assertions.assertThrows(ResourceNotFoundException.class
-                , () -> courseService.deleteCourse(nonExistentCourseId));
+                , () -> courseService.delete(nonExistentCourseId));
 
         //then
         Assertions.assertEquals("There is no course with id = "

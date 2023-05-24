@@ -37,14 +37,14 @@ public class AdminServiceImpl implements AdminService {
     }
 
     @Override
-    public List<AdminResponseDto> getAllAdmins() {
+    public List<AdminResponseDto> getAll() {
         List<Administrator> admins = adminRepository.findAll();
         return admins.stream().map((admin) -> modelMapper.map(admin, AdminResponseDto.class))
                 .collect(Collectors.toList());
     }
 
     @Override
-    public AdminRequestDto saveAdmin(AdminRequestDto adminDto) {
+    public AdminRequestDto save(AdminRequestDto adminDto) {
         Administrator admin = modelMapper.map(adminDto, Administrator.class);
         Administrator savedAdmin = adminRepository.save(admin);
         AdminRequestDto savedAdminDto = modelMapper.map(savedAdmin, AdminRequestDto.class);
@@ -52,21 +52,21 @@ public class AdminServiceImpl implements AdminService {
     }
 
     @Override
-    public AdminResponseDto getAdmin(Long id) {
+    public AdminResponseDto get(Long id) {
        Administrator admin = adminRepository.findById(id).orElseThrow(
                 () -> new ResourceNotFoundException("There is no admin with id = " + id));
         return modelMapper.map(admin, AdminResponseDto.class);
     }
 
     @Override
-    public void deleteAdmin(Long id) {
+    public void delete(Long id) {
         adminRepository.findById(id).orElseThrow(
                 () -> new ResourceNotFoundException("There is no admin with id = " + id));
         adminRepository.deleteById(id);
     }
 
     @Override
-    public AdminUpdateDto updateAdmin(Long id, AdminUpdateDto updatedAdminDto) {
+    public AdminUpdateDto update(Long id, AdminUpdateDto updatedAdminDto) {
         Administrator existingAdmin = adminRepository.findById(id).orElseThrow(
                 () -> new ResourceNotFoundException("There is no admin with id = " + id));
         existingAdmin.setEmail(updatedAdminDto.getEmail());

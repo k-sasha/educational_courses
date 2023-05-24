@@ -24,30 +24,30 @@ public class StudentController {
 
     @GetMapping
     public ResponseEntity<List<StudentResponseDto>> showAllStudents() {
-        return ResponseEntity.ok(studentService.getAllStudents());
+        return ResponseEntity.ok(studentService.getAll());
 
     }
 
     @PostMapping
     public ResponseEntity<StudentResponseDto> addStudent(@Valid @RequestBody StudentRequestDto student) {
-        StudentResponseDto newStudent = studentService.saveStudent(student);
+        StudentResponseDto newStudent = studentService.save(student);
         return new ResponseEntity<>(newStudent, HttpStatus.CREATED);
     }
 
     @PutMapping("/{id}")
     public ResponseEntity<StudentUpdateDto> updateStudent(@PathVariable Long id,
                                                           @Valid @RequestBody StudentUpdateDto student) {
-        return ResponseEntity.ok(studentService.updateStudent(id, student));
+        return ResponseEntity.ok(studentService.update(id, student));
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<StudentResponseDto> getStudent(@PathVariable Long id) {
-        return ResponseEntity.ok(studentService.getStudent(id));
+        return ResponseEntity.ok(studentService.get(id));
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<String> deleteStudent(@PathVariable Long id) {
-        studentService.deleteStudent(id);
+        studentService.delete(id);
         return ResponseEntity.ok("Student with id = " + id + " was deleted");
     }
 

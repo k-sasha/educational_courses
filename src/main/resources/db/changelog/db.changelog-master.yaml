@@ -22,11 +22,10 @@ databaseChangeLog: #параметр в котором находятся миг
   - include:
       file: db/changelog/changeset/create-sequence-student_seq.yaml
   - include: # список активных миграций
-
       file: db/changelog/changeset/create-accesses-table.yaml
   - include:
       file: db/changelog/changeset/create-sequence-access_seq.yaml
-
+  - include: # список активных миграций
       file: db/changelog/changeset/create-lessons-table.yaml
   - include:
       file: db/changelog/changeset/create-sequence-lesson_seq.yaml

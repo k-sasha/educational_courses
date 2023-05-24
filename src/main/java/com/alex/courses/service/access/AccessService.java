@@ -6,8 +6,8 @@ import com.alex.courses.dto.accessDto.AccessResponseDto;
 import java.util.List;
 
 public interface AccessService {
-    List<AccessResponseDto> getAllAccesses();
-    AccessResponseDto saveAccess(AccessRequestDto accessDto);
-    AccessResponseDto getAccess(Long id);
-    void deleteAccess(Long id);
+    List<AccessResponseDto> getAll();
+    AccessResponseDto save(AccessRequestDto accessDto);
+    AccessResponseDto get(Long id);
+    void delete(Long id);
 }

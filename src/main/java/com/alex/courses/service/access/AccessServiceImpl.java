@@ -27,28 +27,28 @@ public class AccessServiceImpl implements AccessService {
     }
 
     @Override
-    public List<AccessResponseDto> getAllAccesses() {
+    public List<AccessResponseDto> getAll() {
         List<Access> accesses = accessRepository.findAll();
         return accesses.stream().map((access) -> modelMapper.map(access, AccessResponseDto.class))
                 .collect(Collectors.toList());
     }
 
     @Override
-    public AccessResponseDto saveAccess(AccessRequestDto accessDto) {
+    public AccessResponseDto save(AccessRequestDto accessDto) {
         Access access = modelMapper.map(accessDto, Access.class);
         Access savedAccess = accessRepository.save(access);
         return modelMapper.map(savedAccess, AccessResponseDto.class);
     }
 
     @Override
-    public AccessResponseDto getAccess(Long id) {
+    public AccessResponseDto get(Long id) {
         Access access = accessRepository.findById(id).orElseThrow(
                 () -> new ResourceNotFoundException("There is no access with id = " + id));
         return modelMapper.map(access, AccessResponseDto.class);
     }
 
     @Override
-    public void deleteAccess(Long id) {
+    public void delete(Long id) {
         accessRepository.findById(id).orElseThrow(
                 () -> new ResourceNotFoundException("There is no access with id = " + id));
         accessRepository.deleteById(id);

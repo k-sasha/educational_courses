@@ -61,7 +61,7 @@ public class LessonServiceImplTest {
         List<LessonResponseDto> expectedResponseDtos = List.of(responseDto1, responseDto2);
 
         //when
-        List<LessonResponseDto> resultResponseDtos = lessonService.getAllLessons();
+        List<LessonResponseDto> resultResponseDtos = lessonService.getAll();
 
         //then
         Assertions.assertEquals(expectedResponseDtos, resultResponseDtos);
@@ -88,7 +88,7 @@ public class LessonServiceImplTest {
 
         // when
         LessonRequestDto requestDto = new LessonRequestDto("lesson1", courseId);
-        LessonResponseDto resultSavedResponseDto = lessonService.saveLesson(requestDto);
+        LessonResponseDto resultSavedResponseDto = lessonService.save(requestDto);
 
         // then
         Assertions.assertEquals(expectedResponseDto.getId(), resultSavedResponseDto.getId());
@@ -104,7 +104,7 @@ public class LessonServiceImplTest {
         Mockito.when(lessonRepository.findById(existingLessonId)).thenReturn(Optional.of(existingLesson));
 
         //when
-        lessonService.deleteLesson(existingLessonId);
+        lessonService.delete(existingLessonId);
 
         //then
         ArgumentCaptor<Long> argumentCaptor = ArgumentCaptor.forClass(Long.class);
@@ -120,7 +120,7 @@ public class LessonServiceImplTest {
 
         //when
         ResourceNotFoundException exception = Assertions.assertThrows(ResourceNotFoundException.class
-                , () -> lessonService.deleteLesson(nonExistentLessonId));
+                , () -> lessonService.delete(nonExistentLessonId));
 
         //then
         Assertions.assertEquals("There is no lesson with id = "

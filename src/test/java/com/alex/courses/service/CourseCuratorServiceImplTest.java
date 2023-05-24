@@ -70,7 +70,7 @@ public class CourseCuratorServiceImplTest {
         List<CourseCuratorResponseDto> expectedResponseDtos = List.of(responseDto1, responseDto2);
 
         //when
-        List<CourseCuratorResponseDto> resultResponseDtos = courseCuratorService.getAllCoursesCurators();
+        List<CourseCuratorResponseDto> resultResponseDtos = courseCuratorService.getAll();
 
         //then
         Assertions.assertEquals(expectedResponseDtos, resultResponseDtos);
@@ -102,7 +102,7 @@ public class CourseCuratorServiceImplTest {
 
         // when
         CourseCuratorRequestDto requestDto = new CourseCuratorRequestDto(courseId, curatorId);
-        CourseCuratorResponseDto resultSavedResponseDto = courseCuratorService.saveCourseCurator(requestDto);
+        CourseCuratorResponseDto resultSavedResponseDto = courseCuratorService.save(requestDto);
 
         // then
         Assertions.assertEquals(expectedResponseDto.getId(), resultSavedResponseDto.getId());
@@ -118,7 +118,7 @@ public class CourseCuratorServiceImplTest {
         Mockito.when(courseCuratorRepository.findById(existingCourseCuratorId)).thenReturn(Optional.of(existingCourseCurator));
 
         //when
-        courseCuratorService.deleteCourseCurator(existingCourseCuratorId);
+        courseCuratorService.delete(existingCourseCuratorId);
 
         //then
         ArgumentCaptor<Long> argumentCaptor = ArgumentCaptor.forClass(Long.class);
@@ -134,7 +134,7 @@ public class CourseCuratorServiceImplTest {
 
         //when
         ResourceNotFoundException exception = Assertions.assertThrows(ResourceNotFoundException.class
-                , () -> courseCuratorService.deleteCourseCurator(nonExistentCourseCuratorId));
+                , () -> courseCuratorService.delete(nonExistentCourseCuratorId));
 
         //then
         Assertions.assertEquals("There is no course-curator with id = "

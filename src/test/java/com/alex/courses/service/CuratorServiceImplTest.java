@@ -54,7 +54,7 @@ public class CuratorServiceImplTest {
         List<CuratorResponseDto> expectedCuratorResponseDtos = List.of(curatorResponseDto1, curatorResponseDto2);
 
         //when
-        List<CuratorResponseDto> resultCuratorResponseDtos = curatorService.getAllCurators();
+        List<CuratorResponseDto> resultCuratorResponseDtos = curatorService.getAll();
 
         //then
         Assertions.assertEquals(2, resultCuratorResponseDtos.size());
@@ -80,7 +80,7 @@ public class CuratorServiceImplTest {
         Mockito.when(curatorRepository.save(curator)).thenReturn(curator);
 
         //when
-        CuratorRequestDto resultSavedCuratorDto = curatorService.saveCurator(expectedCuratorDto);
+        CuratorRequestDto resultSavedCuratorDto = curatorService.save(expectedCuratorDto);
 
         //then
         Assertions.assertEquals(expectedCuratorDto.getName(), resultSavedCuratorDto.getName());
@@ -100,7 +100,7 @@ public class CuratorServiceImplTest {
         Mockito.when(curatorRepository.findById(curatorId)).thenReturn(optionalCurator);
 
         //when
-        curatorService.deleteCurator(curatorId);
+        curatorService.delete(curatorId);
 
         //then
         ArgumentCaptor<Long> argumentCaptor = ArgumentCaptor.forClass(Long.class);
@@ -117,7 +117,7 @@ public class CuratorServiceImplTest {
 
         //when
         ResourceNotFoundException exception = Assertions.assertThrows(ResourceNotFoundException.class
-                , () -> curatorService.deleteCurator(nonExistentCuratorId));
+                , () -> curatorService.delete(nonExistentCuratorId));
 
         //then
         Assertions.assertEquals("There is no curator with id = "
@@ -145,7 +145,7 @@ public class CuratorServiceImplTest {
         Mockito.when(modelMapper.map(updatedCurator, CuratorUpdateDto.class)).thenReturn(updatedCuratorDto);
 
         //when
-        CuratorUpdateDto resultUpdatedCuratorDto = curatorService.updateCurator(curatorId, updatedCuratorDto);
+        CuratorUpdateDto resultUpdatedCuratorDto = curatorService.update(curatorId, updatedCuratorDto);
 
         //then
         Assertions.assertEquals(updatedEmail, resultUpdatedCuratorDto.getEmail());
@@ -165,7 +165,7 @@ public class CuratorServiceImplTest {
 
         //when
         ResourceNotFoundException exception = Assertions.assertThrows(ResourceNotFoundException.class
-                , () -> curatorService.updateCurator(nonExistentCuratorId, updatedCuratorDto));
+                , () -> curatorService.update(nonExistentCuratorId, updatedCuratorDto));
 
         //then
         Assertions.assertEquals("There is no curator with id = "

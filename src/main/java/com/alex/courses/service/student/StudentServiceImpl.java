@@ -28,35 +28,35 @@ public class StudentServiceImpl implements StudentService {
     }
 
     @Override
-    public List<StudentResponseDto> getAllStudents() {
+    public List<StudentResponseDto> getAll() {
         List<Student> students = studentRepository.findAll();
         return students.stream().map((student) -> modelMapper.map(student, StudentResponseDto.class))
                 .collect(Collectors.toList());
     }
 
     @Override
-    public StudentResponseDto saveStudent(StudentRequestDto studentDto) {
+    public StudentResponseDto save(StudentRequestDto studentDto) {
         Student student = modelMapper.map(studentDto, Student.class);
         Student savedStudent = studentRepository.save(student);
         return modelMapper.map(savedStudent, StudentResponseDto.class);
     }
 
     @Override
-    public StudentResponseDto getStudent(Long id) {
+    public StudentResponseDto get(Long id) {
         Student student = studentRepository.findById(id).orElseThrow(
                 () -> new ResourceNotFoundException("There is no student with id = " + id));
         return modelMapper.map(student, StudentResponseDto.class);
     }
 
     @Override
-    public void deleteStudent(Long id) {
+    public void delete(Long id) {
         studentRepository.findById(id).orElseThrow(
                 () -> new ResourceNotFoundException("There is no student with id = " + id));
         studentRepository.deleteById(id);
     }
 
     @Override
-    public StudentUpdateDto updateStudent(Long id, StudentUpdateDto updatedStudentDto) {
+    public StudentUpdateDto update(Long id, StudentUpdateDto updatedStudentDto) {
         Student existingStudent = studentRepository.findById(id).orElseThrow(
                 () -> new ResourceNotFoundException("There is no student with id = " + id));
         existingStudent.setEmail(updatedStudentDto.getEmail());

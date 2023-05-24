@@ -5,9 +5,9 @@ import com.alex.courses.dto.courseDto.CourseResponseDto;
 import java.util.List;
 
 public interface CourseService {
-    List<CourseResponseDto> getAllCourses();
-    CourseResponseDto saveCourse(CourseRequestDto course);
-    CourseResponseDto getCourse(Long id);
-    void deleteCourse(Long id);
+    List<CourseResponseDto> getAll();
+    CourseResponseDto save(CourseRequestDto course);
+    CourseResponseDto get(Long id);
+    void delete(Long id);
 
 }

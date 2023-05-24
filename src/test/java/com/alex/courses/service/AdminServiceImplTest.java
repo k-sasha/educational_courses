@@ -60,7 +60,7 @@ public class AdminServiceImplTest {
         List<AdminResponseDto> expectedAdminResponseDtos = List.of(adminResponseDto1, adminResponseDto2);
 
         //when
-        List<AdminResponseDto> resultAdminResponseDtos = adminService.getAllAdmins();
+        List<AdminResponseDto> resultAdminResponseDtos = adminService.getAll();
 
         //then
         Assertions.assertEquals(2, resultAdminResponseDtos.size());
@@ -86,7 +86,7 @@ public class AdminServiceImplTest {
         Mockito.when(adminRepository.save(admin)).thenReturn(admin);
 
         //when
-        AdminRequestDto resultSavedAdminDto = adminService.saveAdmin(expectedAdminDto);
+        AdminRequestDto resultSavedAdminDto = adminService.save(expectedAdminDto);
 
         //then
         Assertions.assertEquals(expectedAdminDto.getName(), resultSavedAdminDto.getName());
@@ -106,7 +106,7 @@ public class AdminServiceImplTest {
         Mockito.when(adminRepository.findById(adminId)).thenReturn(optionalAdmin);
 
         //when
-        adminService.deleteAdmin(adminId);
+        adminService.delete(adminId);
 
         //then
         ArgumentCaptor<Long> argumentCaptor = ArgumentCaptor.forClass(Long.class);
@@ -123,7 +123,7 @@ public class AdminServiceImplTest {
 
         //when
         ResourceNotFoundException exception = Assertions.assertThrows(ResourceNotFoundException.class
-                , () -> adminService.deleteAdmin(nonExistentAdminId));
+                , () -> adminService.delete(nonExistentAdminId));
 
         //then
         Assertions.assertEquals("There is no admin with id = "
@@ -151,7 +151,7 @@ public class AdminServiceImplTest {
         Mockito.when(modelMapper.map(updatedAdmin, AdminUpdateDto.class)).thenReturn(updatedAdminDto);
 
         //when
-        AdminUpdateDto resultUpdatedAdminDto = adminService.updateAdmin(adminId, updatedAdminDto);
+        AdminUpdateDto resultUpdatedAdminDto = adminService.update(adminId, updatedAdminDto);
 
         //then
         Assertions.assertEquals(updatedEmail, resultUpdatedAdminDto.getEmail());
@@ -171,7 +171,7 @@ public class AdminServiceImplTest {
 
         //when
         ResourceNotFoundException exception = Assertions.assertThrows(ResourceNotFoundException.class
-                , () -> adminService.updateAdmin(nonExistentAdminId, updatedAdminDto));
+                , () -> adminService.update(nonExistentAdminId, updatedAdminDto));
 
         //then
         Assertions.assertEquals("There is no admin with id = "

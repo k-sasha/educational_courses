@@ -54,7 +54,7 @@ public class StudentServiceImplTest {
         List<StudentResponseDto> expectedStudentResponseDtos = List.of(studentResponseDto1, studentResponseDto2);
 
         //when
-        List<StudentResponseDto> resultStudentResponseDtos = studentService.getAllStudents();
+        List<StudentResponseDto> resultStudentResponseDtos = studentService.getAll();
 
         //then
         Assertions.assertEquals(2, resultStudentResponseDtos.size());
@@ -80,7 +80,7 @@ public class StudentServiceImplTest {
         Mockito.when(studentRepository.save(student)).thenReturn(student);
 
         //when
-        StudentResponseDto resultSavedStudentDto = studentService.saveStudent(studentRequestDto);
+        StudentResponseDto resultSavedStudentDto = studentService.save(studentRequestDto);
 
         //then
         Assertions.assertEquals(expectedStudentDto.getId(), resultSavedStudentDto.getId());
@@ -100,7 +100,7 @@ public class StudentServiceImplTest {
         Mockito.when(studentRepository.findById(studentId)).thenReturn(optionalStudent);
 
         //when
-        studentService.deleteStudent(studentId);
+        studentService.delete(studentId);
 
         //then
         ArgumentCaptor<Long> argumentCaptor = ArgumentCaptor.forClass(Long.class);
@@ -117,7 +117,7 @@ public class StudentServiceImplTest {
 
         //when
         ResourceNotFoundException exception = Assertions.assertThrows(ResourceNotFoundException.class
-                , () -> studentService.deleteStudent(nonExistentStudentId));
+                , () -> studentService.delete(nonExistentStudentId));
 
         //then
         Assertions.assertEquals("There is no student with id = "
@@ -145,7 +145,7 @@ public class StudentServiceImplTest {
         Mockito.when(modelMapper.map(updatedStudent, StudentUpdateDto.class)).thenReturn(updatedStudentDto);
 
         //when
-        StudentUpdateDto resultUpdatedStudentDto = studentService.updateStudent(studentId, updatedStudentDto);
+        StudentUpdateDto resultUpdatedStudentDto = studentService.update(studentId, updatedStudentDto);
 
         //then
         Assertions.assertEquals(updatedEmail, resultUpdatedStudentDto.getEmail());
@@ -165,7 +165,7 @@ public class StudentServiceImplTest {
 
         //when
         ResourceNotFoundException exception = Assertions.assertThrows(ResourceNotFoundException.class
-                , () -> studentService.updateStudent(nonExistentStudentId, updatedStudentDto));
+                , () -> studentService.update(nonExistentStudentId, updatedStudentDto));
 
         //then
         Assertions.assertEquals("There is no student with id = "
