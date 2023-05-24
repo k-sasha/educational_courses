@@ -29,4 +29,8 @@ databaseChangeLog: #параметр в котором находятся миг
       file: db/changelog/changeset/create-lessons-table.yaml
   - include:
       file: db/changelog/changeset/create-sequence-lesson_seq.yaml
+  - include: # список активных миграций
+      file: db/changelog/changeset/create-access_to_lessons-table.yaml
+  - include:
+      file: db/changelog/changeset/create-sequence-access_to_lesson_seq.yaml
 
