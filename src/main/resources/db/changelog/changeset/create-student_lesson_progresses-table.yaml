@@ -1,0 +1,48 @@
+databaseChangeLog:
+  - changeSet:
+      id: create-student_lesson_progresses
+      author: Aleksanra Anisimova
+      changes:
+        - createTable:
+            tableName: student_lesson_progresses
+            columns:
+              - column:
+                  name: id
+                  type: bigint
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: student_id
+                  type: bigint
+                  constraints:
+                    foreignKeyName: fk_student_lesson_progresses_student
+                    referencedTableName: students
+                    referencedColumnNames: id
+              - column:
+                  name: course_id
+                  type: bigint
+                  constraints:
+                    foreignKeyName: fk_student_lesson_progresses_course
+                    referencedTableName: courses
+                    referencedColumnNames: id
+              - column:
+                  name: lesson_id
+                  type: bigint
+                  constraints:
+                    foreignKeyName: fk_student_lesson_progresses_lesson
+                    referencedTableName: lessons
+                    referencedColumnNames: id
+              - column:
+                  name: curator_id
+                  type: bigint
+                  constraints:
+                    foreignKeyName: fk_student_lesson_progresses_curator
+                    referencedTableName: curators
+                    referencedColumnNames: id
+              - column:
+                  name: done
+                  type: boolean
+                  constraints:
+                    nullable: false
