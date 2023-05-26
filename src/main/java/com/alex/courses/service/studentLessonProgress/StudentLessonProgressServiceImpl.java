@@ -8,18 +8,24 @@ import com.alex.courses.entity.Student;
 import com.alex.courses.entity.Curator;
 import com.alex.courses.entity.Lesson;
 import com.alex.courses.entity.StudentLessonProgress;
+import com.alex.courses.entity.StudentAccessBinding;
+import com.alex.courses.exseption_handling.AccessNotGrantedException;
+import com.alex.courses.exseption_handling.BindingNotFoundException;
 import com.alex.courses.exseption_handling.ResourceNotFoundException;
+import com.alex.courses.exseption_handling.BindingAlreadyExistsException;
 import com.alex.courses.repository.CourseRepository;
 import com.alex.courses.repository.StudentLessonProgressRepository;
 import com.alex.courses.repository.StudentRepository;
 import com.alex.courses.repository.CuratorRepository;
 import com.alex.courses.repository.LessonRepository;
+import com.alex.courses.repository.StudentAccessBindingRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -30,6 +36,8 @@ public class StudentLessonProgressServiceImpl implements StudentLessonProgressSe
     private final CourseRepository courseRepository;
     private final LessonRepository lessonRepository;
     private final CuratorRepository curatorRepository;
+    private final StudentAccessBindingRepository studentAccessBindingRepository;
+
     private final ModelMapper modelMapper;
 
     @Autowired
@@ -38,12 +46,13 @@ public class StudentLessonProgressServiceImpl implements StudentLessonProgressSe
                                             CourseRepository courseRepository,
                                             LessonRepository lessonRepository,
                                             CuratorRepository curatorRepository,
-                                            ModelMapper modelMapper) {
+                                            StudentAccessBindingRepository studentAccessBindingRepository, ModelMapper modelMapper) {
         this.studentLessonProgressRepository = studentLessonProgressRepository;
         this.studentRepository = studentRepository;
         this.courseRepository = courseRepository;
         this.lessonRepository = lessonRepository;
         this.curatorRepository = curatorRepository;
+        this.studentAccessBindingRepository = studentAccessBindingRepository;
         this.modelMapper = modelMapper;
     }
 
@@ -72,9 +81,25 @@ public class StudentLessonProgressServiceImpl implements StudentLessonProgressSe
                 () -> new ResourceNotFoundException("There is no lesson with id = " + lessonId));
         Curator existingCurator = curatorRepository.findById(curatorId).orElseThrow(
                 () -> new ResourceNotFoundException("There is no curator with id = " + curatorId));
-// TODO write checks
-//       1) Check if the student is allowed to take this lesson
-//       2) Check if there is already a binding for this student and this lesson
+
+        // 1) Check if the student is allowed to take this lesson
+        StudentAccessBinding existingStudentAccessBinding =
+                studentAccessBindingRepository.findByStudentIdAndCourseId(studentId, courseId)
+                        .orElseThrow(() -> new BindingNotFoundException("There is no binding between student with id = " + studentId + " and course with id = " + courseId));
+
+        // Check if the number of lessons taken by the student is less than the available lessons count in the access
+        Long lessonsTakenCount = studentLessonProgressRepository.countByStudentIdAndCourseId(studentId, courseId);
+        if (lessonsTakenCount >= existingStudentAccessBinding.getAccess().getAvailableLessonsCount()) {
+            throw new AccessNotGrantedException("The student with id = " + studentId + " does not have access to the lesson with id = " + lessonId);
+        }
+
+//      2) Check if there is already a binding for this student and this lesson
+        Optional<StudentLessonProgress> existingStudentLessonBinding =
+                studentLessonProgressRepository.findByStudentIdAndLessonId(studentId, lessonId);
+        if (existingStudentLessonBinding.isPresent()) {
+            throw new BindingAlreadyExistsException("The binding between student with id = " + studentId
+                    + " and lesson with id = " + lessonId + " already exists.");
+        }
 
         StudentLessonProgress studentLessonProgress = new StudentLessonProgress();
         studentLessonProgress.setStudent(existingStudent);
