@@ -37,4 +37,8 @@ databaseChangeLog: #параметр в котором находятся миг
       file: db/changelog/changeset/create-student_access_bindings-table.yaml
   - include:
       file: db/changelog/changeset/create-sequence-student_access_binding_seq.yaml
+  - include: # список активных миграций
+      file: db/changelog/changeset/create-text_tasks-table.yaml
+  - include:
+      file: db/changelog/changeset/create-sequence-text_task_seq.yaml
 
