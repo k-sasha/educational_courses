@@ -12,12 +12,17 @@ import com.alex.courses.entity.Lesson;
 import com.alex.courses.entity.Student;
 import com.alex.courses.entity.Curator;
 import com.alex.courses.entity.StudentLessonProgress;
+import com.alex.courses.entity.Access;
+import com.alex.courses.entity.StudentAccessBinding;
 import com.alex.courses.exseption_handling.ResourceNotFoundException;
+import com.alex.courses.exseption_handling.AccessNotGrantedException;
+import com.alex.courses.exseption_handling.BindingNotFoundException;
 import com.alex.courses.repository.LessonRepository;
 import com.alex.courses.repository.StudentLessonProgressRepository;
 import com.alex.courses.repository.StudentRepository;
 import com.alex.courses.repository.CourseRepository;
 import com.alex.courses.repository.CuratorRepository;
+import com.alex.courses.repository.StudentAccessBindingRepository;
 import com.alex.courses.service.studentLessonProgress.StudentLessonProgressServiceImpl;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -43,6 +48,9 @@ public class StudentLessonProgressServiceImplTest {
 
     @Mock
     private StudentLessonProgressRepository studentLessonProgressRepository;
+
+    @Mock
+    private StudentAccessBindingRepository studentAccessBindingRepository;
 
     @Mock
     private StudentRepository studentRepository;
@@ -120,11 +128,16 @@ public class StudentLessonProgressServiceImplTest {
         Course course = new Course(courseId, "course1", null);
         Lesson lesson = new Lesson(lessonId, "lesson1", course);
         Curator curator = new Curator(curatorId, "Maria", "Petrova", "maria@ya.ru");
+        Access access = new Access(1L, "standard", 5);
+        StudentAccessBinding studentAccessBinding = new StudentAccessBinding(1L, student, course, access );
 
         Mockito.when(studentRepository.findById(studentId)).thenReturn(Optional.of(student));
         Mockito.when(courseRepository.findById(courseId)).thenReturn(Optional.of(course));
         Mockito.when(lessonRepository.findById(lessonId)).thenReturn(Optional.of(lesson));
         Mockito.when(curatorRepository.findById(curatorId)).thenReturn(Optional.of(curator));
+        Mockito.when(studentAccessBindingRepository.findByStudentIdAndCourseId(studentId, courseId)).thenReturn(Optional.of(studentAccessBinding));
+        Mockito.when(studentLessonProgressRepository.countByStudentIdAndCourseId(studentId, courseId)).thenReturn(0L);
+        Mockito.when(studentLessonProgressRepository.findByStudentIdAndLessonId(studentId, lessonId)).thenReturn(Optional.empty());
 
         StudentLessonProgress studentLessonProgress = new StudentLessonProgress(1L, student, course, lesson, curator, doneStatus);
         StudentLessonProgressResponseDto expectedResponseDto = new StudentLessonProgressResponseDto(1L
@@ -236,6 +249,61 @@ public class StudentLessonProgressServiceImplTest {
         Assertions.assertEquals("There is no student lesson progress with id = "
                 + nonExistentStudentLessonProgressId, exception.getMessage());
     }
+
+    @Test
+    public void shouldThrowAccessNotGrantedExceptionWhenStudentExceedsLessonLimit() {
+        // given
+        Long studentId = 1L;
+        Long courseId = 1L;
+        Long lessonId = 1L;
+        Long curatorId = 1L;
+        boolean doneStatus = true;
+
+        StudentAccessBinding studentAccessBinding = new StudentAccessBinding();
+        studentAccessBinding.setAccess(new Access());
+        studentAccessBinding.getAccess().setAvailableLessonsCount(1);
+
+        Mockito.when(studentRepository.findById(studentId)).thenReturn(Optional.of(new Student()));
+        Mockito.when(courseRepository.findById(courseId)).thenReturn(Optional.of(new Course()));
+        Mockito.when(lessonRepository.findById(lessonId)).thenReturn(Optional.of(new Lesson()));
+        Mockito.when(curatorRepository.findById(curatorId)).thenReturn(Optional.of(new Curator()));
+        Mockito.when(studentAccessBindingRepository.findByStudentIdAndCourseId(studentId, courseId)).thenReturn(Optional.of(studentAccessBinding));
+        Mockito.when(studentLessonProgressRepository.countByStudentIdAndCourseId(studentId, courseId)).thenReturn(2L);
+
+        // when
+        StudentLessonProgressRequestDto requestDto = new StudentLessonProgressRequestDto(studentId, courseId, lessonId, curatorId, doneStatus);
+        AccessNotGrantedException exception = Assertions.assertThrows(AccessNotGrantedException.class
+                , () -> studentLessonProgressService.save(requestDto));
+
+        // then
+        Assertions.assertEquals("The student with id = " + studentId + " does not have access to the lesson with id = " + lessonId, exception.getMessage());
+    }
+
+    @Test
+    public void shouldThrowBindingNotFoundExceptionWhenNoStudentCourseBindingExists() {
+        // given
+        Long studentId = 1L;
+        Long courseId = 1L;
+        Long lessonId = 1L;
+        Long curatorId = 1L;
+        boolean doneStatus = true;
+
+        Mockito.when(studentRepository.findById(studentId)).thenReturn(Optional.of(new Student()));
+        Mockito.when(courseRepository.findById(courseId)).thenReturn(Optional.of(new Course()));
+        Mockito.when(lessonRepository.findById(lessonId)).thenReturn(Optional.of(new Lesson()));
+        Mockito.when(curatorRepository.findById(curatorId)).thenReturn(Optional.of(new Curator()));
+        Mockito.when(studentAccessBindingRepository.findByStudentIdAndCourseId(studentId, courseId)).thenReturn(Optional.empty());
+
+        // when
+        StudentLessonProgressRequestDto requestDto = new StudentLessonProgressRequestDto(studentId, courseId, lessonId, curatorId, doneStatus);
+        BindingNotFoundException exception = Assertions.assertThrows(BindingNotFoundException.class
+                , () -> studentLessonProgressService.save(requestDto));
+
+        // then
+        Assertions.assertEquals("There is no binding between student with id = " + studentId + " and course with id = " + courseId, exception.getMessage());
+    }
+
+
 
 
 
