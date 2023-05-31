@@ -1,0 +1,27 @@
+databaseChangeLog:
+  - changeSet:
+      id: create-text_tasks
+      author: Aleksanra Anisimova
+      changes:
+        - createTable:
+            tableName: text_tasks
+            columns:
+              - column:
+                  name: id
+                  type: bigint
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: task_description
+                  type: varchar(2000)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: lesson_id
+                  type: bigint
+                  constraints:
+                    foreignKeyName: fk_text_tasks_lesson
+                    referencedTableName: lessons
+                    referencedColumnNames: id

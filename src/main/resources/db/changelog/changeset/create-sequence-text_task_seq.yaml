@@ -1,0 +1,9 @@
+databaseChangeLog:
+  - changeSet:
+      id: create-text-task-sequence #текстовый идентификатор (Обязателен)
+      author: Aleksanra Anisimova # автор (Обязателен)
+      changes:
+        - createSequence: # создаем новую последовательность
+            sequenceName: text_task_seq
+            incrementBy: 1
+            startValue: 1
