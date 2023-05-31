@@ -31,7 +31,23 @@ public class GlobalExceptionHandler {
         return errorMap;
     }
 
-    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ResponseStatus(HttpStatus.FORBIDDEN)
+    @ExceptionHandler(AccessNotGrantedException.class)
+    public Map<String, String> handleAccessNotGrantedException(AccessNotGrantedException exception) {
+        Map<String, String> errorMap = new HashMap<>();
+        errorMap.put("errorMessage", exception.getMessage());
+        return errorMap;
+    }
+
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    @ExceptionHandler(BindingNotFoundException.class)
+    public Map<String, String> handleBindingNotFoundException(BindingNotFoundException exception) {
+        Map<String, String> errorMap = new HashMap<>();
+        errorMap.put("errorMessage", exception.getMessage());
+        return errorMap;
+    }
+
+@ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public Map<String, String> handleInvalidArgument(MethodArgumentNotValidException exception) {
         Map<String, String> errorMap = new HashMap<>();

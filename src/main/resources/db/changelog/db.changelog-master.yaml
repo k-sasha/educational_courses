@@ -38,7 +38,21 @@ databaseChangeLog: #параметр в котором находятся миг
   - include:
       file: db/changelog/changeset/create-sequence-student_access_binding_seq.yaml
   - include: # список активных миграций
+      file: db/changelog/changeset/create-student_lesson_progresses-table.yaml
+  - include:
+      file: db/changelog/changeset/create-sequence-student_lesson_progress_seq.yaml
+  - include: # список активных миграций
+      file: db/changelog/changeset/create-videos-table.yaml
+  - include:
+      file: db/changelog/changeset/create-sequence-video_seq.yaml
+  - include: # список активных миграций   
       file: db/changelog/changeset/create-text_tasks-table.yaml
   - include:
       file: db/changelog/changeset/create-sequence-text_task_seq.yaml
+
+
+
+
+
+
 

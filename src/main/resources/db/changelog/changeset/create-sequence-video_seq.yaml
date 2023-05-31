@@ -1,0 +1,9 @@
+databaseChangeLog:
+  - changeSet:
+      id: create-video-sequence #текстовый идентификатор (Обязателен)
+      author: Aleksanra Anisimova # автор (Обязателен)
+      changes:
+        - createSequence: # создаем новую последовательность
+            sequenceName: video_seq
+            incrementBy: 1
+            startValue: 1

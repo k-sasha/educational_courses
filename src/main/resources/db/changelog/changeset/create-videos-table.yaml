@@ -1,0 +1,27 @@
+databaseChangeLog:
+  - changeSet:
+      id: create-videos
+      author: Aleksanra Anisimova
+      changes:
+        - createTable:
+            tableName: videos
+            columns:
+              - column:
+                  name: id
+                  type: bigint
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: lesson_id
+                  type: bigint
+                  constraints:
+                    foreignKeyName: fk_videos_lesson
+                    referencedTableName: lessons
+                    referencedColumnNames: id
+              - column:
+                  name: video_url
+                  type: varchar(255)
+                  constraints:
+                    nullable: false
