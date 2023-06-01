@@ -1,5 +1,6 @@
 package com.alex.courses.exseption_handling;
 
+import com.alex.courses.entity.SubmissionType;
 import com.fasterxml.jackson.databind.exc.InvalidFormatException;
 import org.hibernate.exception.ConstraintViolationException;
 import org.springframework.http.HttpStatus;
@@ -63,7 +64,11 @@ public class GlobalExceptionHandler {
     public Map<String, String> handleInvalidFormatException(InvalidFormatException exception) {
         Map<String, String> errorMap = new HashMap<>();
         String field = exception.getPath().isEmpty() ? "unknown" : exception.getPath().get(0).getFieldName();
-        errorMap.put(field, "Invalid value. Expected type: " + exception.getTargetType().getSimpleName());
+        if (exception.getTargetType().equals(SubmissionType.class)) {
+            errorMap.put(field, "Invalid value provided. Please use either 'STUDENT_SUBMISSION' or 'CURATOR_FEEDBACK'.");
+        } else {
+            errorMap.put(field, "Invalid value. Expected type: " + exception.getTargetType().getSimpleName());
+        }
         return errorMap;
     }
 
