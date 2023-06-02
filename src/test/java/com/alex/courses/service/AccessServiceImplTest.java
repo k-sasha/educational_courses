@@ -41,14 +41,13 @@ public class AccessServiceImplTest {
         List<Access> accesses = List.of(access1, access2);
         Mockito.when(accessRepository.findAll()).thenReturn(accesses);
 
+        AccessResponseDto accessResponseDto1 = new AccessResponseDto(1L, "standard", 5);
         Mockito.when(modelMapper.map(accesses.get(0), AccessResponseDto.class))
-                .thenReturn(new AccessResponseDto(1L, "standard", 5));
+                .thenReturn(accessResponseDto1);
+        AccessResponseDto accessResponseDto2 = new AccessResponseDto(2L, "business", 10);
         Mockito.when(modelMapper.map(accesses.get(1), AccessResponseDto.class))
-                .thenReturn(new AccessResponseDto(2L, "business", 10));
+                .thenReturn(accessResponseDto2);
 
-
-        AccessResponseDto accessResponseDto1 = modelMapper.map(accesses.get(0), AccessResponseDto.class);
-        AccessResponseDto accessResponseDto2 = modelMapper.map(accesses.get(1), AccessResponseDto.class);
         List<AccessResponseDto> expectedAccessResponseDtos = List.of(accessResponseDto1, accessResponseDto2);
 
         //when
@@ -71,9 +70,9 @@ public class AccessServiceImplTest {
         AccessRequestDto accessRequestDto = new AccessRequestDto("standard", 5);
         Mockito.when(modelMapper.map(accessRequestDto, Access.class)).thenReturn(access);
 
-        Mockito.when(modelMapper.map(access, AccessResponseDto.class))
+        AccessResponseDto expectedAccessDto =new AccessResponseDto(1L, "standard", 5);
+                Mockito.when(modelMapper.map(access, AccessResponseDto.class))
                 .thenReturn(new AccessResponseDto(1L, "standard", 5));
-        AccessResponseDto expectedAccessDto = modelMapper.map(access, AccessResponseDto.class);
 
         Mockito.when(accessRepository.save(access)).thenReturn(access);
 

@@ -41,13 +41,13 @@ public class CourseServiceImplTest {
         List<Course> courses = List.of(course1, course2);
         Mockito.when(courseRepository.findAll()).thenReturn(courses);
 
+        CourseResponseDto courseResponseDto1 = new CourseResponseDto(1L, "course1", null);
         Mockito.when(modelMapper.map(courses.get(0), CourseResponseDto.class))
-                .thenReturn(new CourseResponseDto(1L, "course1", null));
+                .thenReturn(courseResponseDto1);
+        CourseResponseDto courseResponseDto2 = new CourseResponseDto(2L, "course2", null);
         Mockito.when(modelMapper.map(courses.get(1), CourseResponseDto.class))
-                .thenReturn(new CourseResponseDto(2L, "course2", null));
+                .thenReturn(courseResponseDto2);
 
-        CourseResponseDto courseResponseDto1 = modelMapper.map(courses.get(0), CourseResponseDto.class);
-        CourseResponseDto courseResponseDto2 = modelMapper.map(courses.get(1), CourseResponseDto.class);
         List<CourseResponseDto> expectedCourseResponseDtos = List.of(courseResponseDto1, courseResponseDto2);
 
         //when
@@ -69,9 +69,9 @@ public class CourseServiceImplTest {
         CourseRequestDto courseRequestDto = new CourseRequestDto("course1", null);
         Mockito.when(modelMapper.map(courseRequestDto, Course.class)).thenReturn(course);
 
+        CourseResponseDto expectedCourseDto = new CourseResponseDto(1L, "course1", null);
         Mockito.when(modelMapper.map(course, CourseResponseDto.class))
-                .thenReturn(new CourseResponseDto(1L, "course1", null));
-        CourseResponseDto expectedCourseDto = modelMapper.map(course, CourseResponseDto.class);
+                .thenReturn(expectedCourseDto);
 
         Mockito.when(courseRepository.save(course)).thenReturn(course);
 

@@ -44,13 +44,13 @@ public class StudentServiceImplTest {
         List<Student> students = List.of(student1, student2);
         Mockito.when(studentRepository.findAll()).thenReturn(students);
 
+        StudentResponseDto studentResponseDto1 = new StudentResponseDto(1L, "Anna", "Smirnova");
         Mockito.when(modelMapper.map(students.get(0), StudentResponseDto.class))
-                .thenReturn(new StudentResponseDto(1L, "Anna", "Smirnova"));
+                .thenReturn(studentResponseDto1);
+        StudentResponseDto studentResponseDto2 = new StudentResponseDto(2L, "Ivan", "Ivanov");
         Mockito.when(modelMapper.map(students.get(1), StudentResponseDto.class))
-                .thenReturn(new StudentResponseDto(2L, "Ivan", "Ivanov"));
+                .thenReturn(studentResponseDto2);
 
-        StudentResponseDto studentResponseDto1 = modelMapper.map(students.get(0), StudentResponseDto.class);
-        StudentResponseDto studentResponseDto2 = modelMapper.map(students.get(1), StudentResponseDto.class);
         List<StudentResponseDto> expectedStudentResponseDtos = List.of(studentResponseDto1, studentResponseDto2);
 
         //when
@@ -73,9 +73,9 @@ public class StudentServiceImplTest {
         StudentRequestDto studentRequestDto = new StudentRequestDto("Anna", "Smirnova", "anna@ya.ru");
         Mockito.when(modelMapper.map(studentRequestDto, Student.class)).thenReturn(student);
 
+        StudentResponseDto expectedStudentDto = new StudentResponseDto(1L, "Anna", "Smirnova");
         Mockito.when(modelMapper.map(student, StudentResponseDto.class))
-                .thenReturn(new StudentResponseDto(1L, "Anna", "Smirnova"));
-        StudentResponseDto expectedStudentDto = modelMapper.map(student, StudentResponseDto.class);
+                .thenReturn(expectedStudentDto);
 
         Mockito.when(studentRepository.save(student)).thenReturn(student);
 

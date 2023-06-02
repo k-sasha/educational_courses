@@ -74,19 +74,19 @@ public class StudentAccessBindingServiceImplTest {
         List<StudentAccessBinding> studentAccessBindings = List.of(studentAccessBinding1, studentAccessBinding2);
         Mockito.when(studentAccessBindingRepository.findAll()).thenReturn(studentAccessBindings);
 
+        StudentAccessBindingResponseDto responseDto1 = new StudentAccessBindingResponseDto(1L
+                , new StudentResponseDto(1L, "Anna", "Smirnova")
+                , new CourseResponseDto(1L, "course1", null)
+                , new AccessResponseDto(1L, "standard", 5));
         Mockito.when(modelMapper.map(studentAccessBindings.get(0), StudentAccessBindingResponseDto.class))
-                .thenReturn(new StudentAccessBindingResponseDto(1L
-                        , new StudentResponseDto(1L, "Anna", "Smirnova")
-                        , new CourseResponseDto(1L, "course1", null)
-                        , new AccessResponseDto(1L, "standard", 5)));
+                .thenReturn(responseDto1);
+        StudentAccessBindingResponseDto responseDto2 = new StudentAccessBindingResponseDto(2L
+                , new StudentResponseDto(2L, "Ivan", "Ivanov")
+                , new CourseResponseDto(2L, "course2", null)
+                , new AccessResponseDto(2L, "business", 10));
         Mockito.when(modelMapper.map(studentAccessBindings.get(1), StudentAccessBindingResponseDto.class))
-                .thenReturn(new StudentAccessBindingResponseDto(2L
-                        , new StudentResponseDto(2L, "Ivan", "Ivanov")
-                        , new CourseResponseDto(2L, "course2", null)
-                        , new AccessResponseDto(2L, "business", 10)));
+                .thenReturn(responseDto2);
 
-        StudentAccessBindingResponseDto responseDto1 = modelMapper.map(studentAccessBindings.get(0), StudentAccessBindingResponseDto.class);
-        StudentAccessBindingResponseDto responseDto2 = modelMapper.map(studentAccessBindings.get(1), StudentAccessBindingResponseDto.class);
         List<StudentAccessBindingResponseDto> expectedResponseDtos = List.of(responseDto1, responseDto2);
 
         //when

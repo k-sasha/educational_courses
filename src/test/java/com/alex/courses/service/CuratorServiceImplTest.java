@@ -44,13 +44,13 @@ public class CuratorServiceImplTest {
         List<Curator> curators = List.of(curator1, curator2);
         Mockito.when(curatorRepository.findAll()).thenReturn(curators);
 
+        CuratorResponseDto curatorResponseDto1 = new CuratorResponseDto(1L, "Anna", "Smirnova");
         Mockito.when(modelMapper.map(curators.get(0), CuratorResponseDto.class))
-                .thenReturn(new CuratorResponseDto(1L, "Anna", "Smirnova"));
+                .thenReturn(curatorResponseDto1);
+        CuratorResponseDto curatorResponseDto2 = new CuratorResponseDto(2L, "Ivan", "Ivanov");
         Mockito.when(modelMapper.map(curators.get(1), CuratorResponseDto.class))
-                .thenReturn(new CuratorResponseDto(2L, "Ivan", "Ivanov"));
+                .thenReturn(curatorResponseDto2);
 
-        CuratorResponseDto curatorResponseDto1 = modelMapper.map(curators.get(0), CuratorResponseDto.class);
-        CuratorResponseDto curatorResponseDto2 = modelMapper.map(curators.get(1), CuratorResponseDto.class);
         List<CuratorResponseDto> expectedCuratorResponseDtos = List.of(curatorResponseDto1, curatorResponseDto2);
 
         //when
@@ -71,10 +71,8 @@ public class CuratorServiceImplTest {
         Curator curator = new Curator(1L, "Petr"
                 , "Petrov", "petr@ya.ru");
 
-        Mockito.when(modelMapper.map(curator, CuratorRequestDto.class))
-                .thenReturn(new CuratorRequestDto("Petr", "Petrov", "petr@ya.ru"));
-
-        CuratorRequestDto expectedCuratorDto = modelMapper.map(curator, CuratorRequestDto.class);
+        CuratorRequestDto expectedCuratorDto = new CuratorRequestDto("Petr", "Petrov", "petr@ya.ru");
+        Mockito.when(modelMapper.map(curator, CuratorRequestDto.class)).thenReturn(expectedCuratorDto);
 
         Mockito.when(modelMapper.map(expectedCuratorDto, Curator.class)).thenReturn(curator);
         Mockito.when(curatorRepository.save(curator)).thenReturn(curator);

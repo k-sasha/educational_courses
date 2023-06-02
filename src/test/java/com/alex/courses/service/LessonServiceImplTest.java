@@ -49,15 +49,15 @@ public class LessonServiceImplTest {
         List<Lesson> lessons = List.of(lesson1, lesson2);
         Mockito.when(lessonRepository.findAll()).thenReturn(lessons);
 
+        LessonResponseDto responseDto1 = new LessonResponseDto(1L, "lesson1"
+                , new CourseResponseDto(1L, "course1", null));
         Mockito.when(modelMapper.map(lessons.get(0), LessonResponseDto.class))
-                .thenReturn(new LessonResponseDto(1L, "lesson1"
-                        , new CourseResponseDto(1L, "course1", null)));
+                .thenReturn(responseDto1);
+        LessonResponseDto responseDto2 = new LessonResponseDto(2L, "lesson2"
+                , new CourseResponseDto(1L, "course1", null));
         Mockito.when(modelMapper.map(lessons.get(1), LessonResponseDto.class))
-                .thenReturn(new LessonResponseDto(2L, "lesson2"
-                        , new CourseResponseDto(1L, "course1", null)));
+                .thenReturn(responseDto2);
 
-        LessonResponseDto responseDto1 = modelMapper.map(lessons.get(0), LessonResponseDto.class);
-        LessonResponseDto responseDto2 = modelMapper.map(lessons.get(1), LessonResponseDto.class);
         List<LessonResponseDto> expectedResponseDtos = List.of(responseDto1, responseDto2);
 
         //when

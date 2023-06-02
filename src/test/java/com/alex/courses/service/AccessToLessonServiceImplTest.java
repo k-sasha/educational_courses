@@ -61,19 +61,19 @@ public class AccessToLessonServiceImplTest {
         List<AccessToLesson> accessToLessons = List.of(accessToLesson1, accessToLesson2);
         Mockito.when(accessToLessonRepository.findAll()).thenReturn(accessToLessons);
 
+        AccessToLessonResponseDto responseDto1 = new AccessToLessonResponseDto(1L
+                , new LessonResponseDto(1L, "lesson1"
+                , new CourseResponseDto(1L, "course1", null) )
+                , new AccessResponseDto(1L, "standart", 5));
         Mockito.when(modelMapper.map(accessToLessons.get(0), AccessToLessonResponseDto.class))
-                .thenReturn(new AccessToLessonResponseDto(1L
-                        , new LessonResponseDto(1L, "lesson1"
-                        , new CourseResponseDto(1L, "course1", null) )
-                        , new AccessResponseDto(1L, "standart", 5)));
+                .thenReturn(responseDto1);
+        AccessToLessonResponseDto responseDto2 = new AccessToLessonResponseDto(2L
+                , new LessonResponseDto(2L, "lesson1"
+                , new CourseResponseDto(1L, "course1", null) )
+                , new AccessResponseDto(2L, "standart", 5));
         Mockito.when(modelMapper.map(accessToLessons.get(1), AccessToLessonResponseDto.class))
-                .thenReturn(new AccessToLessonResponseDto(2L
-                        , new LessonResponseDto(2L, "lesson1"
-                        , new CourseResponseDto(1L, "course1", null) )
-                        , new AccessResponseDto(2L, "standart", 5)));
+                .thenReturn(responseDto2);
 
-        AccessToLessonResponseDto responseDto1 = modelMapper.map(accessToLessons.get(0), AccessToLessonResponseDto.class);
-        AccessToLessonResponseDto responseDto2 = modelMapper.map(accessToLessons.get(1), AccessToLessonResponseDto.class);
         List<AccessToLessonResponseDto> expectedResponseDtos = List.of(responseDto1, responseDto2);
 
         //when
