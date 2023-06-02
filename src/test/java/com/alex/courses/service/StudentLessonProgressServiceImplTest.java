@@ -85,21 +85,21 @@ public class StudentLessonProgressServiceImplTest {
         List<StudentLessonProgress> studentLessonProgresses = List.of(studentLessonProgress1, studentLessonProgress2);
         Mockito.when(studentLessonProgressRepository.findAll()).thenReturn(studentLessonProgresses);
 
+        StudentLessonProgressResponseDto responseDto1 = new StudentLessonProgressResponseDto(1L
+                , new StudentResponseDto(1L, "Anna", "Smirnova")
+                , new CourseResponseDto(1L, "course1", null)
+                , new LessonResponseDto(1L, "lesson1", new CourseResponseDto(1L, "course1", null))
+                , new CuratorResponseDto(1L, "Maria", "Petrova"), true);
         Mockito.when(modelMapper.map(studentLessonProgresses.get(0), StudentLessonProgressResponseDto.class))
-                .thenReturn(new StudentLessonProgressResponseDto(1L
-                        , new StudentResponseDto(1L, "Anna", "Smirnova")
-                        , new CourseResponseDto(1L, "course1", null)
-                        , new LessonResponseDto(1L, "lesson1", new CourseResponseDto(1L, "course1", null))
-                        , new CuratorResponseDto(1L, "Maria", "Petrova"), true));
+                .thenReturn(responseDto1);
+        StudentLessonProgressResponseDto responseDto2 = new StudentLessonProgressResponseDto(2L
+                , new StudentResponseDto(2L, "Ivan", "Ivanov")
+                , new CourseResponseDto(2L, "course2", null)
+                , new LessonResponseDto(2L, "lesson2", new CourseResponseDto(2L, "course2", null))
+                , new CuratorResponseDto(2L, "Petr", "Marov"), true);
         Mockito.when(modelMapper.map(studentLessonProgresses.get(1), StudentLessonProgressResponseDto.class))
-                .thenReturn(new StudentLessonProgressResponseDto(2L
-                        , new StudentResponseDto(2L, "Ivan", "Ivanov")
-                        , new CourseResponseDto(2L, "course2", null)
-                        , new LessonResponseDto(2L, "lesson2", new CourseResponseDto(2L, "course2", null))
-                        , new CuratorResponseDto(2L, "Petr", "Marov"), true));
+                .thenReturn(responseDto2);
 
-        StudentLessonProgressResponseDto responseDto1 = modelMapper.map(studentLessonProgresses.get(0), StudentLessonProgressResponseDto.class);
-        StudentLessonProgressResponseDto responseDto2 = modelMapper.map(studentLessonProgresses.get(1), StudentLessonProgressResponseDto.class);
         List<StudentLessonProgressResponseDto> expectedResponseDtos = List.of(responseDto1, responseDto2);
 
         //when
@@ -129,7 +129,7 @@ public class StudentLessonProgressServiceImplTest {
         Lesson lesson = new Lesson(lessonId, "lesson1", course);
         Curator curator = new Curator(curatorId, "Maria", "Petrova", "maria@ya.ru");
         Access access = new Access(1L, "standard", 5);
-        StudentAccessBinding studentAccessBinding = new StudentAccessBinding(1L, student, course, access );
+        StudentAccessBinding studentAccessBinding = new StudentAccessBinding(1L, student, course, access);
 
         Mockito.when(studentRepository.findById(studentId)).thenReturn(Optional.of(student));
         Mockito.when(courseRepository.findById(courseId)).thenReturn(Optional.of(course));
@@ -302,10 +302,6 @@ public class StudentLessonProgressServiceImplTest {
         // then
         Assertions.assertEquals("There is no binding between student with id = " + studentId + " and course with id = " + courseId, exception.getMessage());
     }
-
-
-
-
 
 
 }

@@ -65,7 +65,7 @@ public class GlobalExceptionHandler {
         Map<String, String> errorMap = new HashMap<>();
         String field = exception.getPath().isEmpty() ? "unknown" : exception.getPath().get(0).getFieldName();
         if (exception.getTargetType().equals(SubmissionType.class)) {
-            errorMap.put(field, "Invalid value provided. Please use either 'STUDENT_SUBMISSION' or 'CURATOR_FEEDBACK'.");
+            errorMap.put(field, "Invalid value provided. Please use either "+ SubmissionType.getAvailableValues());
         } else {
             errorMap.put(field, "Invalid value. Expected type: " + exception.getTargetType().getSimpleName());
         }

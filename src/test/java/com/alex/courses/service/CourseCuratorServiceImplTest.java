@@ -21,6 +21,7 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.modelmapper.ModelMapper;
+
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.eq;
 
@@ -56,17 +57,17 @@ public class CourseCuratorServiceImplTest {
         List<CourseCurator> courseCurators = List.of(courseCurator1, courseCurator2);
         Mockito.when(courseCuratorRepository.findAll()).thenReturn(courseCurators);
 
+        CourseCuratorResponseDto responseDto1 = new CourseCuratorResponseDto(1L
+                , new CourseResponseDto(1L, "course1", null)
+                , new CuratorResponseDto(1L, "Anna", "Smirnova"));
         Mockito.when(modelMapper.map(courseCurators.get(0), CourseCuratorResponseDto.class))
-                .thenReturn(new CourseCuratorResponseDto(1L
-                        , new CourseResponseDto(1L,"course1", null )
-                        , new CuratorResponseDto(1L, "Anna", "Smirnova")));
+                .thenReturn(responseDto1);
+        CourseCuratorResponseDto responseDto2 = new CourseCuratorResponseDto(2L
+                , new CourseResponseDto(1L, "course1", null)
+                , new CuratorResponseDto(2L, "Ivan", "Ivanov"));
         Mockito.when(modelMapper.map(courseCurators.get(1), CourseCuratorResponseDto.class))
-                .thenReturn(new CourseCuratorResponseDto(2L
-                        , new CourseResponseDto(1L,"course1", null )
-                        , new CuratorResponseDto(2L, "Ivan", "Ivanov")));
+                .thenReturn(responseDto2);
 
-        CourseCuratorResponseDto responseDto1 = modelMapper.map(courseCurators.get(0), CourseCuratorResponseDto.class);
-        CourseCuratorResponseDto responseDto2 = modelMapper.map(courseCurators.get(1), CourseCuratorResponseDto.class);
         List<CourseCuratorResponseDto> expectedResponseDtos = List.of(responseDto1, responseDto2);
 
         //when

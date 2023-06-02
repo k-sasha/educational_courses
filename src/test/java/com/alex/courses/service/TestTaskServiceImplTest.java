@@ -58,18 +58,17 @@ public class TestTaskServiceImplTest {
 
         Mockito.when(textTaskRepository.findAll()).thenReturn(textTasks);
 
-        Mockito.when(modelMapper.map(textTasks.get(0), TextTaskResponseDto.class))
-                .thenReturn(new TextTaskResponseDto(1L, "Task 1"
-                        ,new LessonResponseDto(1L, "lesson1"
-                        , new CourseResponseDto(1L, "course1", null))));
+        TextTaskResponseDto responseDto1 = new TextTaskResponseDto(1L, "Task 1"
+                ,new LessonResponseDto(1L, "lesson1"
+                , new CourseResponseDto(1L, "course1", null)));
+                Mockito.when(modelMapper.map(textTasks.get(0), TextTaskResponseDto.class))
+                .thenReturn(responseDto1);
 
-        Mockito.when(modelMapper.map(textTasks.get(1), TextTaskResponseDto.class))
-                .thenReturn(new TextTaskResponseDto(2L, "Task 2"
-                        ,new LessonResponseDto(2L, "lesson2"
-                        , new CourseResponseDto(1L, "course1", null))));
-
-        TextTaskResponseDto responseDto1 = modelMapper.map(textTasks.get(0), TextTaskResponseDto.class);
-        TextTaskResponseDto responseDto2 = modelMapper.map(textTasks.get(1), TextTaskResponseDto.class);
+        TextTaskResponseDto responseDto2 = new TextTaskResponseDto(2L, "Task 2"
+                ,new LessonResponseDto(2L, "lesson2"
+                , new CourseResponseDto(1L, "course1", null)));
+                Mockito.when(modelMapper.map(textTasks.get(1), TextTaskResponseDto.class))
+                .thenReturn(responseDto2);
 
         List<TextTaskResponseDto> expectedResponseDtos = List.of(responseDto1, responseDto2);
 

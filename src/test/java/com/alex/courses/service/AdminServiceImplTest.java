@@ -50,14 +50,14 @@ public class AdminServiceImplTest {
         List<Administrator> admins = List.of(admin1, admin2);
         Mockito.when(adminRepository.findAll()).thenReturn(admins);
 
+        AdminResponseDto adminDto1 = new AdminResponseDto(1L, "Anna", "Smirnova");
         Mockito.when(modelMapper.map(admins.get(0), AdminResponseDto.class))
-                .thenReturn(new AdminResponseDto(1L, "Anna", "Smirnova"));
+                .thenReturn(adminDto1);
+        AdminResponseDto adminDto2 = new AdminResponseDto(2L, "Ivan", "Ivanov");
         Mockito.when(modelMapper.map(admins.get(1), AdminResponseDto.class))
-                .thenReturn(new AdminResponseDto(2L, "Ivan", "Ivanov"));
+                .thenReturn(adminDto2);
 
-        AdminResponseDto adminResponseDto1 = modelMapper.map(admins.get(0), AdminResponseDto.class);
-        AdminResponseDto adminResponseDto2 = modelMapper.map(admins.get(1), AdminResponseDto.class);
-        List<AdminResponseDto> expectedAdminResponseDtos = List.of(adminResponseDto1, adminResponseDto2);
+        List<AdminResponseDto> expectedAdminResponseDtos = List.of(adminDto1, adminDto2);
 
         //when
         List<AdminResponseDto> resultAdminResponseDtos = adminService.getAll();
@@ -77,10 +77,9 @@ public class AdminServiceImplTest {
         Administrator admin = new Administrator(1L, "Petr"
                 , "Petrov", "petr@ya.ru");
 
+        AdminRequestDto expectedAdminDto = new AdminRequestDto("Petr", "Petrov", "petr@ya.ru");
         Mockito.when(modelMapper.map(admin, AdminRequestDto.class))
-                .thenReturn(new AdminRequestDto("Petr", "Petrov", "petr@ya.ru"));
-
-        AdminRequestDto expectedAdminDto = modelMapper.map(admin, AdminRequestDto.class);
+                .thenReturn(expectedAdminDto);
 
         Mockito.when(modelMapper.map(expectedAdminDto, Administrator.class)).thenReturn(admin);
         Mockito.when(adminRepository.save(admin)).thenReturn(admin);
@@ -197,15 +196,11 @@ public class AdminServiceImplTest {
         Mockito.when(courseRepository.save(course)).thenReturn(course);
         Mockito.when(adminRepository.save(admin)).thenReturn(admin);
 
-        Mockito.when(modelMapper.map(admin, AdminResponseDto.class))
-                .thenReturn(new AdminResponseDto(adminId, "Anna", "Smirnova"));
+        AdminResponseDto adminDto = new AdminResponseDto(adminId, "Anna", "Smirnova");
 
-        AdminResponseDto adminDto = modelMapper.map(admin, AdminResponseDto.class);
-
+        CourseResponseDto expectedCourseDto = new CourseResponseDto(courseId, "Course1", adminDto);
         Mockito.when(modelMapper.map(course, CourseResponseDto.class))
-                .thenReturn(new CourseResponseDto(courseId, "Course1", adminDto));
-
-        CourseResponseDto expectedCourseDto = modelMapper.map(course, CourseResponseDto.class);
+                .thenReturn(expectedCourseDto);
 
         //when
         CourseResponseDto resultCourseDto = adminService.addCourseToAdmin(adminId, courseId);

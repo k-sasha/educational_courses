@@ -49,7 +49,7 @@ public class VideoServiceImplTest {
         //given
         Course course = new Course(1L, "course1", null);
         Lesson lesson1 = new Lesson(1L, "lesson1", course);
-        Video video1 = new Video(1L, "http://video1.com",  lesson1);
+        Video video1 = new Video(1L, "http://video1.com", lesson1);
 
         Lesson lesson2 = new Lesson(2L, "lesson2", course);
         Video video2 = new Video(2L, "http://video2.com", lesson2);
@@ -58,18 +58,17 @@ public class VideoServiceImplTest {
 
         Mockito.when(videoRepository.findAll()).thenReturn(videos);
 
+        VideoResponseDto responseDto1 = new VideoResponseDto(1L, "http://video1.com"
+                , new LessonResponseDto(1L, "lesson1"
+                , new CourseResponseDto(1L, "course1", null)));
         Mockito.when(modelMapper.map(videos.get(0), VideoResponseDto.class))
-                .thenReturn(new VideoResponseDto(1L, "http://video1.com"
-                        ,new LessonResponseDto(1L, "lesson1"
-                        , new CourseResponseDto(1L, "course1", null))));
+                .thenReturn(responseDto1);
 
+        VideoResponseDto responseDto2 = new VideoResponseDto(2L, "http://video2.com"
+                , new LessonResponseDto(2L, "lesson2"
+                , new CourseResponseDto(1L, "course1", null)));
         Mockito.when(modelMapper.map(videos.get(1), VideoResponseDto.class))
-                .thenReturn(new VideoResponseDto(2L, "http://video2.com"
-                        ,new LessonResponseDto(2L, "lesson2"
-                        , new CourseResponseDto(1L, "course1", null))));
-
-        VideoResponseDto responseDto1 = modelMapper.map(videos.get(0), VideoResponseDto.class);
-        VideoResponseDto responseDto2 = modelMapper.map(videos.get(1), VideoResponseDto.class);
+                .thenReturn(responseDto2);
 
         List<VideoResponseDto> expectedResponseDtos = List.of(responseDto1, responseDto2);
 
@@ -106,7 +105,7 @@ public class VideoServiceImplTest {
         Mockito.when(videoRepository.save(any(Video.class))).thenReturn(video);
 
         // when
-        VideoRequestDto requestDto = new VideoRequestDto( videoUrl, lessonId);
+        VideoRequestDto requestDto = new VideoRequestDto(videoUrl, lessonId);
         VideoResponseDto resultSavedResponseDto = videoService.save(requestDto);
 
         // then
